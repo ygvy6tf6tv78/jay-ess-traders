@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 26 26 26;
+    --foreground: 241 245 249;
+  }
+}
+
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-slate-100;
+    background-color: #1a1a1a;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: scroll-position;
+  }
+  
+  /* Optimize animations */
+  * {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.04;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.08) 1px,
+        rgba(0, 0, 0, 0.08) 2px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.08) 1px,
+        rgba(0, 0, 0, 0.08) 2px
+      );
+    background-size: 2px 2px;
+  }
+}
+
+/* Smooth card hover */
+.aesthetic-card {
+  @apply bg-white rounded-2xl shadow-sm;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aesthetic-card:hover {
+  @apply shadow-lg;
+  transform: translateY(-2px);
+}
+
+/* Smooth fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Shine sweep animation for buttons */
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* React PDF */
+.react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.react-pdf__Page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.react-pdf__Page__canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain;
+  display: block;
+}
+
+.react-pdf__Page__textContent,
+.react-pdf__Page__annotations {
+  display: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Lightbox Center Alignment */
+.yarl__root {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100dvh !important; /* Dynamic viewport height for mobile */
+  min-height: 100vh !important; /* Fallback for older browsers */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  /* Prevent scroll */
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.yarl__container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  width: 100% !important;
+  padding: 1rem !important;
+}
+
+.yarl__slide {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.yarl__slide img {
+  max-height: 90vh !important;
+  max-width: 90vw !important;
+  object-fit: contain !important;
+  margin: auto !important;
+}
+
+/* Prevent scroll when lightbox is open - simplified */
+body:has(.yarl__root) {
+  overflow: hidden !important;
+  /* Don't use position fixed as it causes scroll issues */
+  width: 100% !important;
+  height: 100% !important;
+  overscroll-behavior: contain !important;
+  /* Prevent any scroll behavior */
+  position: relative !important;
+}
+
+/* Prevent lightbox from causing scroll */
+.yarl__root {
+  scroll-behavior: auto !important;
+}
+
+.yarl__root * {
+  scroll-behavior: auto !important;
+}
+
+/* Prevent any focus-related scrolling */
+.yarl__root:focus,
+.yarl__root *:focus {
+  outline: none !important;
+}
+
+/* Ensure lightbox doesn't cause layout shift */
+.yarl__root {
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+}
+
+/* Slow spin animation for payment QR glow */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Shimmer animation for border highlight */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

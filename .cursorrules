@@ -1,0 +1,47 @@
+# Cursor Rules for Jay Ess Traders Project
+
+## Project Context
+This is a Next.js 14 digital visiting card for Jay Ess Traders, a tiles/bathware retailer.
+
+## Code Style
+- Use TypeScript for all new files
+- Use functional components with hooks
+- Prefer arrow functions
+- Use Tailwind for styling (no inline styles)
+- Follow shadcn/ui patterns for components
+
+## File Organization
+- Components go in `app/components/`
+- UI primitives go in `components/ui/`
+- Utilities go in `app/lib/`
+- Configuration in `app/data/site.ts`
+
+## Best Practices
+- Always use Next.js Image for images
+- Lazy load heavy components
+- Keep components under 200 lines
+- Extract reusable logic to hooks
+- Use Framer Motion for animations (keep subtle)
+
+## Configuration
+- Edit `app/data/site.ts` for content changes
+- Never hardcode contact info in components
+- Always use siteConfig for data
+
+## Performance
+- Optimize images before committing
+- Keep bundle size minimal
+- Use dynamic imports for modals/drawers
+- Avoid unnecessary re-renders
+
+## Testing
+- Test on mobile first
+- Verify all CTAs work
+- Check Lighthouse scores
+- Test on slow 3G
+
+## Dependencies
+- Use pnpm for package management
+- Avoid adding unnecessary packages
+- Check bundle impact before adding deps
+

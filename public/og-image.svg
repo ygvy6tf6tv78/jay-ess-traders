@@ -1,0 +1,47 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#157C82;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f5f64;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Grid pattern -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Logo circle -->
+  <circle cx="300" cy="315" r="120" fill="rgba(255,255,255,0.15)"/>
+  
+  <!-- Initials -->
+  <text x="300" y="340" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="white" text-anchor="middle">JES</text>
+  
+  <!-- Brand name -->
+  <text x="480" y="285" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">Jay Ess Traders</text>
+  
+  <!-- Tagline -->
+  <text x="480" y="345" font-family="Arial, sans-serif" font-size="36" fill="rgba(255,255,255,0.9)">Exclusive Dealer of Simpolo Tiles and Bath</text>
+  
+  <!-- Bottom line -->
+  <text x="480" y="405" font-family="Arial, sans-serif" font-size="28" fill="rgba(255,255,255,0.8)">Tiles • Bathware • Switches • Paint</text>
+  
+  <!-- Corner decorations -->
+  <!-- Top left -->
+  <path d="M 40,80 L 40,40 L 80,40" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+  
+  <!-- Top right -->
+  <path d="M 1120,40 L 1160,40 L 1160,80" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+  
+  <!-- Bottom left -->
+  <path d="M 40,550 L 40,590 L 80,590" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+  
+  <!-- Bottom right -->
+  <path d="M 1120,590 L 1160,590 L 1160,550" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+</svg>
+

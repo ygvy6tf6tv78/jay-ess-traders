@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OG Image Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+        }
+        #canvas-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        canvas {
+            border: 2px solid #ccc;
+            display: block;
+            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 24px;
+            font-size: 16px;
+            background: #157C82;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0f5f64;
+        }
+        .instructions {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>OG Image Generator for Jay Ess Traders</h2>
+        <p>This tool generates a 1200x630px Open Graph image for social media sharing.</p>
+        <p>Click the button below to download the image, then save it as <code>og-image.png</code> in the <code>public/</code> directory.</p>
+    </div>
+    
+    <div id="canvas-container">
+        <canvas id="ogCanvas" width="1200" height="630"></canvas>
+        <button onclick="downloadImage()">Download OG Image</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('ogCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Background gradient
+        const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+        gradient.addColorStop(0, '#157C82');
+        gradient.addColorStop(1, '#0f5f64');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 1200, 630);
+
+        // Add subtle grid texture
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < 1200; x += 30) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, 630);
+            ctx.stroke();
+        }
+        for (let y = 0; y < 630; y += 30) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(1200, y);
+            ctx.stroke();
+        }
+
+        // Logo circle
+        ctx.beginPath();
+        ctx.arc(300, 315, 120, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.fill();
+
+        // Initials in circle
+        ctx.font = 'bold 80px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('JES', 300, 315);
+
+        // Brand name
+        ctx.font = 'bold 72px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'left';
+        ctx.fillText('Jay Ess Traders', 480, 260);
+
+        // Tagline
+        ctx.font = '36px Arial';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.fillText('Exclusive Dealer of Simpolo Tiles and Bath', 480, 330);
+
+        // Bottom line
+        ctx.font = '28px Arial';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillText('Tiles • Bathware • Switches • Paint', 480, 390);
+
+        // Decorative corner elements
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 3;
+        
+        // Top left corner
+        ctx.beginPath();
+        ctx.moveTo(40, 80);
+        ctx.lineTo(40, 40);
+        ctx.lineTo(80, 40);
+        ctx.stroke();
+
+        // Top right corner
+        ctx.beginPath();
+        ctx.moveTo(1120, 40);
+        ctx.lineTo(1160, 40);
+        ctx.lineTo(1160, 80);
+        ctx.stroke();
+
+        // Bottom left corner
+        ctx.beginPath();
+        ctx.moveTo(40, 550);
+        ctx.lineTo(40, 590);
+        ctx.lineTo(80, 590);
+        ctx.stroke();
+
+        // Bottom right corner
+        ctx.beginPath();
+        ctx.moveTo(1120, 590);
+        ctx.lineTo(1160, 590);
+        ctx.lineTo(1160, 550);
+        ctx.stroke();
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'og-image.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
+

@@ -384,22 +384,47 @@ export default function PaymentFace({
         </motion.div>
       </div>
 
-      {/* Repixelx Branding - Bottom Edge */}
+      {/* OneLink Branding - Bottom Edge */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.3 }}
-        className="absolute bottom-0 left-0 right-0 pb-3 pt-2 border-t border-white/10"
+        className="absolute bottom-0 left-0 right-0 pb-3 pt-2 px-4"
       >
-        <div className="flex items-center justify-center gap-2">
-              <span className="text-white/50 text-[10px]">{t('developedBy')}</span>
-          <Image
-            src="/logos/Union.png"
-            alt="Repixelx Studio"
-            width={80}
-            height={24}
-            className="opacity-80 hover:opacity-100 transition-opacity"
-          />
+        <div className="flex items-center justify-center">
+          <div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border"
+            style={{
+              fontFamily: 'var(--font-inter), Inter, sans-serif',
+              background: 'rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              borderColor: 'rgba(255, 255, 255, 0.2)'
+            }}
+          >
+            <Shield className="w-3.5 h-3.5" style={{ color: '#ffffff' }} />
+            <span 
+              className="text-xs font-semibold flex items-center gap-1.5"
+              style={{ 
+                color: '#ffffff',
+                fontSize: '12px',
+                fontWeight: 600
+              }}
+            >
+              Secure payment gateway
+              <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>•</span>
+              OneLink
+            </span>
+            <Image
+              src="/gallery/onelink.png"
+              alt="OneLink Logo"
+              width={32}
+              height={11}
+              className="opacity-100 brightness-0 invert"
+              quality={100}
+              priority
+            />
+          </div>
         </div>
       </motion.div>
 

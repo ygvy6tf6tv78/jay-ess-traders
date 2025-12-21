@@ -6,8 +6,8 @@ export const siteConfig = {
   contact: {
     phones: [
       { number: "9541124856", label: "Main Office" },
-      { number: "7006121541", label: "" },
-      { number: "9419162736", label: "" }
+      { number: "7006121541", label: "Sales" },
+      { number: "9419162736", label: "Support" }
     ],
     email: "jayesstraders2024@gmail.com",
     address: "Kashmir Complex, Jay Ess Towers, Near BSF Camp, Vill. Karangi, Sohal Road, Akhnoor",

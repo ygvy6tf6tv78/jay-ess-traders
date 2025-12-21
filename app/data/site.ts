@@ -1,10 +1,14 @@
 export const siteConfig = {
   name: "Jay Ess Traders",
   tagline: "Exclusive Dealer of Simpolo Tiles and Bath",
-  url: "https://jayesstraders.com", // Update with actual domain
+  url: "https://jayess.onelink.cards",
   
   contact: {
-    phones: ["7006121541", "9419162736"],
+    phones: [
+      { number: "9541124856", label: "Main Office" },
+      { number: "7006121541", label: "" },
+      { number: "9419162736", label: "" }
+    ],
     email: "jayesstraders2024@gmail.com",
     address: "Kashmir Complex, Jay Ess Towers, Near BSF Camp, Vill. Karangi, Sohal Road, Akhnoor",
     mapQuery: "Jay Ess Traders, Sohal Road, Akhnoor",
@@ -12,7 +16,7 @@ export const siteConfig = {
   },
   
   whatsapp: {
-    defaultPhone: "7006121541",
+    defaultPhone: "9541124856",
     defaultMessage: "Hi Jay Ess Traders, I'm interested in tiles and bathware.",
   },
   

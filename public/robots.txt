@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jayesstraders.com/sitemap.xml
+Sitemap: https://jayess.onelink.cards/sitemap.xml
 

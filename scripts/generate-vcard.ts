@@ -11,7 +11,8 @@ function generateVCard() {
     `TITLE:${siteConfig.tagline}`,
   ]
 
-  siteConfig.contact.phones.forEach((phone, index) => {
+  siteConfig.contact.phones.forEach((phoneItem, index) => {
+    const phone = typeof phoneItem === 'string' ? phoneItem : phoneItem.number
     const type = index === 0 ? 'WORK' : 'VOICE'
     const cleaned = phone.replace(/\D/g, '')
     lines.push(`TEL;TYPE=${type}:+91${cleaned}`)

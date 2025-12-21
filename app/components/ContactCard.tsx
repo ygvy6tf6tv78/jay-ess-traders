@@ -47,11 +47,16 @@ export default function ContactCard() {
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-white mb-1.5 text-base">Phone</h3>
               <div className="space-y-1">
-                {siteConfig.contact.phones.map((phone) => (
-                  <div key={phone} className="text-sm text-white/90">
-                    {formatPhone(phone)}
-                  </div>
-                ))}
+                {siteConfig.contact.phones.map((phoneItem) => {
+                  const phone = typeof phoneItem === 'string' ? phoneItem : phoneItem.number
+                  const label = typeof phoneItem === 'string' ? undefined : phoneItem.label
+                  return (
+                    <div key={phone} className="text-sm text-white/90">
+                      {label && <span className="font-semibold">{label}: </span>}
+                      {formatPhone(phone)}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>

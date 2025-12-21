@@ -13,8 +13,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: siteConfig.seo.title,
-  description: siteConfig.seo.description,
+  title: 'Smart Digital Business Card',
+  description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
   keywords: siteConfig.seo.keywords,
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.credits.designer,
@@ -22,12 +22,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: siteConfig.seo.title,
-    description: siteConfig.seo.description,
+    title: 'Smart Digital Business Card',
+    description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
     siteName: siteConfig.name,
     images: [
       {
-        url: '/og-image.svg',
+        url: '/logos/jay-ess-logo.jpg',
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.seo.title,
-    description: siteConfig.seo.description,
-    images: ['/og-image.svg'],
+    title: 'Smart Digital Business Card',
+    description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
+    images: ['/logos/jay-ess-logo.jpg'],
   },
   viewport: {
     width: 'device-width',
@@ -63,7 +63,7 @@ export default function RootLayout({
     name: siteConfig.name,
     description: siteConfig.tagline,
     url: siteConfig.url,
-    telephone: `+91${siteConfig.contact.phones[0]}`,
+    telephone: `+91${typeof siteConfig.contact.phones[0] === 'string' ? siteConfig.contact.phones[0] : siteConfig.contact.phones[0].number}`,
     email: siteConfig.contact.email,
     address: {
       '@type': 'PostalAddress',

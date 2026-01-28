@@ -73,7 +73,7 @@ pnpm dev
 
 **Jay Ess Traders**
 - 📍 Chowkibal, Kupwara Road, Akhnoor, Jammu
-- 📞 +91 70064 10506, +91 88999 20115
+- 📞 +91 70064 10506, +91 95411 24856
 - 📧 jesstraders123@gmail.com
 - ⏰ Mon-Sun: 9:00 AM - 8:00 PM
 

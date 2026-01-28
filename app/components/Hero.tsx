@@ -277,7 +277,7 @@ export default function Hero() {
               <div className="flex items-start gap-3 mb-3 w-full max-w-sm bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20">
                 <Store className="w-5 h-5 flex-shrink-0 mt-0.5 drop-shadow-md" />
                 <p className="text-sm leading-relaxed text-left drop-shadow-md">
-                  <span className="font-semibold">Deals in:</span> Simpolo Tiles, Jaquar Bathware, Legrand Switches, Nerolac Paints
+                  <span className="font-semibold">Deals in:</span> Simpolo Tiles, Jaquar Bathware, Legrand Switches, Berger Paints
                 </p>
               </div>
 

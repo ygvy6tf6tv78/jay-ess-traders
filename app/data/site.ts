@@ -37,9 +37,9 @@ export const siteConfig = {
       logo: "/logos/legrand.jpg",
     },
     {
-      name: "Nerolac",
+      name: "Berger Paints",
       tagline: "Paints",
-      logo: "/logos/nerolac_paints_ltd_logo.jpeg",
+      logo: "/logos/images.jpeg",
     },
   ],
   
@@ -96,9 +96,9 @@ export const siteConfig = {
     },
     {
       id: "nerolac-paints",
-      title: "Nerolac Paints",
+      title: "Berger Paints",
       description: "Interior and exterior paints with expert shade guidance.",
-      logo: "/logos/nerolac_paints_ltd_logo.jpeg",
+      logo: "/logos/images.jpeg",
       details: "Comprehensive range of interior and exterior emulsions, wood finishes, and protective coatings. Get expert color consultation and shade selection guidance.",
       images: [
         "/gallery/paint-1.jpg",
@@ -159,8 +159,8 @@ export const siteConfig = {
   
   seo: {
     title: "Jay Ess Traders - Premium Tiles, Bathware, Switches & Paint | Akhnoor",
-    description: "Exclusive dealer of Simpolo Tiles, Jaquar Bathware, Legrand Switches, and Nerolac Paint in Akhnoor. Visit our store for premium building materials and expert guidance.",
-    keywords: "tiles akhnoor, bathware akhnoor, simpolo tiles, jaquar bathware, legrand switches, nerolac paint, building materials akhnoor",
+    description: "Exclusive dealer of Simpolo Tiles, Jaquar Bathware, Legrand Switches, and Berger Paints in Akhnoor. Visit our store for premium building materials and expert guidance.",
+    keywords: "tiles akhnoor, bathware akhnoor, simpolo tiles, jaquar bathware, legrand switches, berger paints, building materials akhnoor",
   },
   
   credits: {

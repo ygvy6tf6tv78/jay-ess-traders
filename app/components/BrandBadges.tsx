@@ -1,32 +1,50 @@
 'use client'
 
-import Image from 'next/image'
+import { Award, BadgeCheck, Truck, Sparkles, Palette, Zap, Hand } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { siteConfig } from '../data/site'
 
+const getBadgeIcon = (badge: string): LucideIcon => {
+  const b = badge.toLowerCase()
+  if (b.includes('authoris') || b.includes('dealer') || b.includes('exclusive')) return Award
+  if (b.includes('curat') || b.includes('premium') || b.includes('quality')) return BadgeCheck
+  if (b.includes('deliver') || b.includes('quick') || b.includes('fast')) return Truck
+  if (b.includes('shine') || b.includes('finish')) return Sparkles
+  if (b.includes('paint') || b.includes('shade') || b.includes('colour') || b.includes('color')) return Palette
+  if (b.includes('switch') || b.includes('electric')) return Zap
+  return Hand
+}
+
 export default function BrandBadges() {
+  const badges = (siteConfig as { keywordBadges?: string[] }).keywordBadges ?? []
+
+  if (badges.length === 0) return null
+
   return (
-    <div className="flex flex-wrap gap-2">
-      {siteConfig.brands.map((brand) => (
-        <div
-          key={brand.name}
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-emerald-50 to-green-50 rounded-full border border-emerald-200/70 shadow-sm hover:shadow-md transition-shadow"
-        >
-          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center p-0.5 overflow-hidden shadow-sm">
-            {brand.logo ? (
-              <Image
-                src={brand.logo}
-                alt={brand.name}
-                width={20}
-                height={20}
-                className="w-full h-full object-contain rounded-full"
-              />
-            ) : (
-              <span className="text-xs font-bold text-emerald-600">{brand.name[0]}</span>
-            )}
-          </div>
-          <span className="text-xs font-bold text-emerald-800">{brand.name}</span>
-        </div>
-      ))}
+    <div className="flex flex-wrap items-center gap-1.5">
+      {badges.map((badge) => {
+        const Icon = getBadgeIcon(badge)
+        return (
+          <span
+            key={badge}
+            className="inline-flex w-fit items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(219, 234, 254, 0.95) 0%, rgba(239, 246, 255, 0.95) 100%)',
+              color: '#1D4ED8',
+              border: '1px solid rgba(59, 130, 246, 0.35)',
+              boxShadow: '0 2px 6px rgba(59, 130, 246, 0.12)',
+            }}
+          >
+            <Icon
+              className="w-3.5 h-3.5 flex-shrink-0"
+              style={{ color: '#1D4ED8' }}
+              strokeWidth={2.2}
+            />
+            <span className="leading-none">{badge}</span>
+          </span>
+        )
+      })}
     </div>
   )
 }

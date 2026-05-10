@@ -22,189 +22,211 @@ interface ReviewsData {
   totalReviews: number
   reviews: Review[]
   googleUrl?: string
+  unavailable?: boolean
+  message?: string
+}
+
+const cardStyle: React.CSSProperties = {
+  background:
+    'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(254,252,240,0.95) 42%, rgba(255,255,255,0.98) 100%)',
+  border: '1px solid rgba(251, 236, 137, 0.26)',
+  boxShadow: '0 18px 36px rgba(15, 23, 42, 0.08)',
+}
+
+function getWriteReviewUrl(): string {
+  if (siteConfig.google?.reviewsUrl) return siteConfig.google.reviewsUrl
+  if (siteConfig.google?.placeId) {
+    return `https://search.google.com/local/writereview?placeid=${encodeURIComponent(siteConfig.google.placeId)}`
+  }
+  return siteConfig.google?.mapsUrl || '#'
+}
+
+function getViewOnGoogleUrl(data: ReviewsData | null): string {
+  if (data?.googleUrl) return data.googleUrl
+  if (siteConfig.google?.mapsUrl) return siteConfig.google.mapsUrl
+  if (siteConfig.google?.placeId) {
+    return `https://www.google.com/maps/place/?q=place_id:${siteConfig.google.placeId}`
+  }
+  return '#'
 }
 
 export default function ReviewsPage() {
   const [reviewsData, setReviewsData] = useState<ReviewsData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [fetchFailed, setFetchFailed] = useState(false)
   const [expandedReviews, setExpandedReviews] = useState<Set<number>>(new Set())
   const [displayCount, setDisplayCount] = useState(3)
 
+  const placeId = siteConfig.google?.placeId
+
   useEffect(() => {
-    if (!siteConfig.google?.placeId) {
+    if (!placeId) {
       setLoading(false)
-      setError('Google Place ID not configured')
+      setFetchFailed(true)
       return
     }
 
     const fetchReviews = async () => {
       try {
         const response = await fetch(
-          `/api/google-reviews?placeId=${encodeURIComponent(siteConfig.google.placeId)}`
+          `/api/google-reviews?placeId=${encodeURIComponent(placeId)}`
         )
-
         if (!response.ok) {
-          throw new Error('Failed to fetch reviews')
+          const data = await response.json().catch(() => ({}))
+          throw new Error(data.message || data.error || 'request_failed')
         }
-
         const data = await response.json()
+        if (data.error) throw new Error(data.message || data.error)
         setReviewsData(data)
-      } catch (err) {
-        console.error('Error fetching reviews:', err)
-        setError('Failed to load reviews')
+      } catch {
+        setFetchFailed(true)
       } finally {
         setLoading(false)
       }
     }
 
     fetchReviews()
-  }, [])
+  }, [placeId])
 
   const toggleReview = (index: number) => {
-    const newExpanded = new Set(expandedReviews)
-    if (newExpanded.has(index)) {
-      newExpanded.delete(index)
-    } else {
-      newExpanded.add(index)
-    }
-    setExpandedReviews(newExpanded)
+    setExpandedReviews((prev) => {
+      const next = new Set(prev)
+      if (next.has(index)) next.delete(index)
+      else next.add(index)
+      return next
+    })
   }
 
-  const getGoogleReviewsUrl = () => {
-    if (reviewsData?.googleUrl) {
-      return reviewsData.googleUrl
-    }
-    if (siteConfig.google?.reviewsUrl) {
-      return siteConfig.google.reviewsUrl
-    }
-    if (siteConfig.google?.mapsUrl) {
-      return siteConfig.google.mapsUrl
-    }
-    if (siteConfig.google?.placeId) {
-      return `https://www.google.com/maps/place/?q=place_id:${siteConfig.google.placeId}`
-    }
-    return '#'
-  }
+  const writeReviewUrl = getWriteReviewUrl()
+  const googleReviewsUrl = getViewOnGoogleUrl(reviewsData)
 
   const handleWriteReview = () => {
-    const writeReviewUrl = siteConfig.google?.reviewsUrl || 
-      `https://search.google.com/local/writereview?placeid=${siteConfig.google?.placeId}`
-    window.open(writeReviewUrl, '_blank', 'noopener,noreferrer')
+    if (writeReviewUrl !== '#') {
+      window.open(writeReviewUrl, '_blank', 'noopener,noreferrer')
+    }
   }
 
+  const reviews = reviewsData?.reviews ?? []
+  const showFallback = fetchFailed || !reviewsData || reviews.length === 0
+
   return (
-    <main className="min-h-screen pb-12 relative z-10" style={{ 
-      background: 'linear-gradient(135deg, #fefbf3 0%, #faf8f0 50%, #fefbf3 100%)'
-    }}>
+    <main
+      className="min-h-screen pb-12 relative z-10 overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #fefbf3 0%, #faf8f0 50%, #fefbf3 100%)' }}
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#FBEC89]/18 blur-3xl" />
+        <div className="absolute top-[18rem] -left-16 h-64 w-64 rounded-full bg-[#1E4D3D]/10 blur-3xl" />
+        <div className="absolute bottom-[8rem] right-[-4rem] h-72 w-72 rounded-full bg-[#FBEC89]/12 blur-3xl" />
+      </div>
+
       {/* Header */}
-      <div className="border-b sticky top-0 z-10 backdrop-blur-md shadow-sm" style={{ 
-        backgroundColor: 'rgba(255, 251, 243, 0.95)',
-        borderColor: 'rgba(0, 0, 0, 0.1)'
-      }}>
-        <div className="max-w-md mx-auto px-4 py-4 flex items-center gap-3">
+      <div
+        className="border-b sticky top-0 z-10 backdrop-blur-md shadow-sm"
+        style={{
+          backgroundColor: 'rgba(255, 251, 243, 0.95)',
+          borderColor: 'rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <div className="max-w-md mx-auto pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] py-4 flex items-center gap-3">
           <Link
-            href="/#reviews"
-            className="p-3 rounded-full transition-colors hover:bg-black/5"
+            href="/"
+            prefetch
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full transition-colors hover:bg-black/5 active:scale-[0.98] touch-manipulation"
+            style={{ WebkitTapHighlightColor: 'transparent' }}
             onClick={() => {
               if (typeof window !== 'undefined') {
                 sessionStorage.setItem('fromReviews', 'true')
               }
             }}
           >
-            <ArrowLeft className="w-7 h-7 text-slate-800" />
+            <ArrowLeft className="h-6 w-6 text-slate-800" strokeWidth={2.25} aria-hidden />
           </Link>
           <h1 className="text-xl font-bold text-slate-800">Google Reviews</h1>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-md mx-auto px-4 py-6">
-        {/* Write Review Section - At Top */}
+      <div className="max-w-md mx-auto pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] py-6 relative z-10">
+        {/* Write a Review CTA — at top */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="mb-6 rounded-2xl border-2 p-6 text-center shadow-lg"
-          style={{ 
-            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%)',
-            borderColor: 'rgba(16, 185, 129, 0.3)'
-          }}
+          className="mb-6 rounded-[28px] p-6 text-center"
+          style={cardStyle}
           id="write-review"
         >
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Star className="w-5 h-5" style={{ color: '#059669', fill: '#059669' }} />
+            <Star className="w-5 h-5 fill-[#1E4D3D] text-[#1E4D3D]" />
             <h3 className="text-slate-800 font-bold text-lg">Review Us on Google</h3>
-            <Star className="w-5 h-5" style={{ color: '#059669', fill: '#059669' }} />
+            <Star className="w-5 h-5 fill-[#1E4D3D] text-[#1E4D3D]" />
           </div>
-          
-          <p className="text-slate-600 text-sm mb-5">
-            Share your experience and help others discover our quality service
+          <p className="text-slate-600 text-sm mb-5 leading-relaxed">
+            Share your experience and help others discover quality tiles & bathware in Akhnoor.
           </p>
-
           <motion.button
             onClick={handleWriteReview}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 relative overflow-hidden"
-            style={{ 
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
-              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
+            className="w-full text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+            style={{
+              background: 'linear-gradient(135deg, #1E4D3D 0%, #2F6B55 100%)',
+              boxShadow: '0 18px 34px rgba(30, 77, 61, 0.24)',
             }}
           >
-            <Star className="w-5 h-5 fill-white relative z-10" />
-            <span className="relative z-10">Write a Review</span>
-            <ExternalLink className="w-5 h-5 relative z-10" />
+            <Star className="w-5 h-5 fill-white" />
+            <span>Write a Review</span>
+            <ExternalLink className="w-5 h-5" />
           </motion.button>
-
-          <p className="text-slate-500 text-xs mt-3">
-            Opens Google Maps to submit your review
-          </p>
+          <p className="text-slate-500 text-xs mt-3">Opens Google Maps to submit your review</p>
         </motion.div>
 
         {loading ? (
-          // Skeleton Loader
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div 
+              <div
                 key={i}
-                className="rounded-2xl p-6 animate-pulse" 
-                style={{ 
-                  height: '150px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                  border: '1px solid rgba(0, 0, 0, 0.1)'
-                }} 
+                className="rounded-[24px] p-6 animate-pulse h-[150px]"
+                style={cardStyle}
               />
             ))}
           </div>
-        ) : error || !reviewsData ? (
-          // Error State
-          <div className="text-center py-12 rounded-2xl" style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            border: '1px solid rgba(0, 0, 0, 0.1)'
-          }}>
-            <p className="mb-4 text-slate-700">
-              {error || 'Google Place ID not configured'}
+        ) : showFallback ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-[28px] p-6 text-center"
+            style={cardStyle}
+          >
+            <p className="text-slate-700 mb-4 leading-relaxed">
+              Reviews are loading from Google or temporarily unavailable. You can still leave us a
+              new review or open our Google profile.
             </p>
-            <Link
-              href="/"
-              className="transition-colors font-medium text-emerald-400 hover:text-emerald-300"
+            <a
+              href={googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center gap-2 text-white font-semibold py-3.5 px-6 rounded-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #1E4D3D 0%, #2F6B55 100%)',
+                boxShadow: '0 18px 34px rgba(30, 77, 61, 0.24)',
+              }}
             >
-              Return to Home
-            </Link>
-          </div>
+              View on Google
+              <ExternalLink className="w-5 h-5" />
+            </a>
+          </motion.div>
         ) : (
           <>
-            {/* Rating Summary */}
+            {/* Single rating summary */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="mb-6 text-center rounded-2xl p-6 shadow-md"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                border: '1px solid rgba(0, 0, 0, 0.1)'
-              }}
+              className="mb-6 text-center rounded-[28px] p-6"
+              style={cardStyle}
             >
               <div className="flex items-center justify-center gap-2 mb-3">
                 <div className="flex items-center gap-1">
@@ -212,7 +234,7 @@ export default function ReviewsPage() {
                     <Star
                       key={star}
                       className={`w-6 h-6 ${
-                        star <= Math.round(reviewsData.rating)
+                        star <= Math.round(reviewsData!.rating)
                           ? 'fill-yellow-400 text-yellow-400'
                           : 'text-gray-300'
                       }`}
@@ -220,47 +242,44 @@ export default function ReviewsPage() {
                   ))}
                 </div>
                 <span className="font-bold text-2xl text-slate-800">
-                  {reviewsData.rating.toFixed(1)}
+                  {reviewsData!.rating.toFixed(1)}
                 </span>
               </div>
               <p className="text-base text-slate-600">
-                Based on {reviewsData.totalReviews.toLocaleString()} reviews on Google
+                Based on {reviewsData!.totalReviews.toLocaleString()} reviews on Google
               </p>
             </motion.div>
 
-            {/* Reviews List */}
+            {/* Reviews list */}
             <div className="space-y-4 mb-6">
-              {reviewsData.reviews.slice(0, displayCount).map((review, index) => {
+              {reviews.slice(0, displayCount).map((review, index) => {
                 const isExpanded = expandedReviews.has(index)
                 const shouldTruncate = review.text.length > 150
-
                 return (
                   <motion.div
-                    key={review.time}
+                    key={`${review.time}-${index}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
-                    className="rounded-2xl p-5 hover:shadow-lg transition-all shadow-sm"
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                      border: '1px solid rgba(0, 0, 0, 0.1)'
-                    }}
+                    className="rounded-[24px] p-5 hover:shadow-lg transition-all relative overflow-hidden"
+                    style={cardStyle}
                   >
-                    <div className="flex items-start gap-3 mb-3">
+                    <div className="absolute inset-x-5 top-3 h-8 rounded-full bg-[#FBEC89]/20 blur-2xl pointer-events-none" />
+                    <div className="flex items-start gap-3 mb-3 relative z-10">
                       {review.profile_photo_url ? (
                         <Image
                           src={review.profile_photo_url}
                           alt={review.author_name}
                           width={48}
                           height={48}
-                          className="w-12 h-12 rounded-full object-cover"
+                          className="w-12 h-12 rounded-full object-cover ring-2 ring-[#FBEC89]/20"
                           unoptimized
                         />
                       ) : (
-                        <div 
+                        <div
                           className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
                           style={{
-                            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                            background: 'linear-gradient(135deg, #2F6B55 0%, #1E4D3D 100%)',
                           }}
                         >
                           <span className="text-white font-semibold text-base">
@@ -292,16 +311,17 @@ export default function ReviewsPage() {
                       </div>
                     </div>
                     <p
-                      className={`text-sm leading-relaxed ${
+                      className={`text-sm leading-relaxed text-slate-700 ${
                         shouldTruncate && !isExpanded ? 'line-clamp-3' : ''
-                      } text-slate-700`}
+                      }`}
                     >
                       {review.text}
                     </p>
                     {shouldTruncate && (
                       <button
+                        type="button"
                         onClick={() => toggleReview(index)}
-                        className="mt-2 text-sm font-medium transition-colors text-emerald-400 hover:text-emerald-300"
+                        className="mt-2 text-sm font-semibold transition-colors text-[#1E4D3D] hover:text-[#2F6B55]"
                       >
                         {isExpanded ? 'Read less' : 'Read more'}
                       </button>
@@ -311,8 +331,7 @@ export default function ReviewsPage() {
               })}
             </div>
 
-            {/* View More Button */}
-            {reviewsData.reviews.length > displayCount && (
+            {reviews.length > displayCount && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -320,30 +339,32 @@ export default function ReviewsPage() {
                 className="mb-6"
               >
                 <button
-                  onClick={() => setDisplayCount(reviewsData.reviews.length)}
-                  className="w-full text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all"
+                  type="button"
+                  onClick={() => setDisplayCount(reviews.length)}
+                  className="w-full text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all"
                   style={{
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                    background: 'linear-gradient(135deg, #1E4D3D 0%, #2F6B55 100%)',
+                    boxShadow: '0 18px 34px rgba(30, 77, 61, 0.24)',
                   }}
                 >
-                  View More ({reviewsData.reviews.length - displayCount} more)
+                  View More ({reviews.length - displayCount} more)
                 </button>
               </motion.div>
             )}
 
-            {/* View All Reviews on Google Button */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
             >
               <a
-                href={getGoogleReviewsUrl()}
+                href={googleReviewsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                 style={{
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                  background: 'linear-gradient(135deg, #1E4D3D 0%, #2F6B55 100%)',
+                  boxShadow: '0 20px 36px rgba(30, 77, 61, 0.24)',
                 }}
               >
                 View All Reviews on Google
@@ -356,4 +377,3 @@ export default function ReviewsPage() {
     </main>
   )
 }
-

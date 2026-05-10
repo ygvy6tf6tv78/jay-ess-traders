@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: '/logos/jay-ess-logo.jpg',
+        url: '/logos/541185191_17855456889513750_6148655236123844473_n.jpg',
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Smart Digital Business Card',
     description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
-    images: ['/logos/jay-ess-logo.jpg'],
+    images: ['/logos/541185191_17855456889513750_6148655236123844473_n.jpg'],
   },
   viewport: {
     width: 'device-width',

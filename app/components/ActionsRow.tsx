@@ -1,15 +1,22 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Phone, Download, Share2, Navigation, CreditCard, MapPin, Star, X } from 'lucide-react'
+import { Phone, Download, Share2, Navigation, CreditCard, MapPin, Star, X, Package, FileText } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { siteConfig } from '../data/site'
+import { GALLERY_ITEMS } from '../data/galleryImages'
 import { getTelLink, getWhatsAppLink, formatPhone } from '../lib/phone'
 import { generateVCard, downloadVCard } from '../lib/vcard'
 import { useLanguage } from '../contexts/LanguageContext'
+import {
+  PAYMENT_BUTTON_STYLE,
+  PAYMENT_BUTTON_HOVER_STYLE,
+  CALL_BUTTON_STYLE,
+  CALL_BUTTON_HOVER_STYLE,
+} from '../lib/brandStyles'
 
 interface ActionsRowProps {
   onOpenPayments?: () => void
@@ -86,87 +93,106 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
   }
 
   const handleReviews = () => {
-    // Open Google Maps for reviews
     if (siteConfig.google?.mapsUrl) {
       window.open(siteConfig.google.mapsUrl, '_blank')
     }
   }
 
+  const scrollToSection = (id: string) => {
+    if (typeof window === 'undefined') return
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   return (
     <>
-      <div className="space-y-3" onClick={(e) => e.stopPropagation()}>
-        {/* Call & Payment buttons */}
-        <div className="flex gap-2">
+      <div className="space-y-3 w-full max-w-full min-w-0" onClick={(e) => e.stopPropagation()}>
+        {/* Row 1: Call Now + Payment — Mango gradient + sizing */}
+        <div className="grid grid-cols-2 gap-2 w-full min-w-0">
           <Button
             ref={callButtonRef}
+            data-call-button
             onClick={(e) => {
               e.stopPropagation()
               setCallDialogOpen(true)
             }}
-            className="flex-1 h-11 text-white font-bold rounded-full border border-white/30 relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full min-w-0 h-11 text-white font-semibold rounded-full transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation relative overflow-hidden group"
             style={{
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
-              boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.39), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25)',
+              ...CALL_BUTTON_STYLE,
+              WebkitTapHighlightColor: 'transparent',
+              transform: 'translateY(-1px)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 20px 0 rgba(16, 185, 129, 0.5), 0 4px 8px 0 rgba(0, 0, 0, 0.15), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3)'
-              e.currentTarget.style.transform = 'translateY(-2px)'
+              Object.assign(e.currentTarget.style, CALL_BUTTON_HOVER_STYLE)
+              e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 14px 0 rgba(16, 185, 129, 0.39), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25)'
-              e.currentTarget.style.transform = 'translateY(0)'
+              Object.assign(e.currentTarget.style, CALL_BUTTON_STYLE)
+              e.currentTarget.style.transform = 'translateY(-1px) scale(1)'
             }}
           >
-            {/* Animated shine effect */}
-            <div className="absolute inset-0 w-full h-full">
-              <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </div>
-            <div className="relative z-10 flex items-center justify-center">
-              <Phone className="w-4 h-4 mr-2" />
+            <Phone
+              className="w-4 h-4 relative z-10"
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))' }}
+            />
+            <span
+              className="text-sm font-bold relative z-10 truncate"
+              style={{ fontSize: '14px', textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}
+            >
               {t('callNow')}
-            </div>
+            </span>
           </Button>
+
           {onOpenPayments && (
-            <div className="flex-1 relative">
-              {/* NEW Badge - Red color, centered on top edge */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20">
-                <span className="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md border border-red-600/50 whitespace-nowrap">
-                  NEW
-                </span>
-              </div>
+            <div className="min-w-0 relative">
+              <span
+                className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 text-white text-[8px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap z-20 animate-pulse"
+                style={{
+                  background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
+                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.5), 0 0 12px rgba(239, 68, 68, 0.3)',
+                }}
+              >
+                NEW
+              </span>
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
                   onOpenPayments()
                 }}
-                className="w-full h-11 text-white font-bold rounded-full border border-white/30 relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full min-w-0 h-11 text-white font-semibold rounded-full transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation relative overflow-hidden group"
                 style={{
-                  background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%)',
-                  boxShadow: '0 4px 14px 0 rgba(14, 165, 233, 0.39), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25)',
+                  ...PAYMENT_BUTTON_STYLE,
+                  WebkitTapHighlightColor: 'transparent',
+                  transform: 'translateY(-1px)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 6px 20px 0 rgba(14, 165, 233, 0.5), 0 4px 8px 0 rgba(0, 0, 0, 0.15), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  Object.assign(e.currentTarget.style, PAYMENT_BUTTON_HOVER_STYLE)
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 14px 0 rgba(14, 165, 233, 0.39), 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 -2px 8px 0 rgba(0, 0, 0, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25)'
-                  e.currentTarget.style.transform = 'translateY(0)'
+                  Object.assign(e.currentTarget.style, PAYMENT_BUTTON_STYLE)
+                  e.currentTarget.style.transform = 'translateY(-1px) scale(1)'
                 }}
               >
-                {/* Animated shine effect */}
-                <div className="absolute inset-0 w-full h-full">
-                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                </div>
-                <div className="relative z-10 flex items-center justify-center pointer-events-none">
-                  <Image
-                    src="/logos/icons8-bhim-48.png"
-                    alt="BHIM"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4 mr-2 object-contain pointer-events-none"
-                  />
-                  <span className="pointer-events-none">{t('openPayment')}</span>
-                </div>
+                <Image
+                  src="/logos/icons8-bhim-48.png"
+                  alt="Payment"
+                  width={16}
+                  height={16}
+                  className="w-4 h-4 object-contain relative z-10"
+                  style={{
+                    filter:
+                      'brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))',
+                  }}
+                />
+                <span
+                  className="text-sm font-bold relative z-10 truncate"
+                  style={{ fontSize: '14px', textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}
+                >
+                  {t('openPayment')}
+                </span>
               </Button>
             </div>
           )}
@@ -179,7 +205,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             e.stopPropagation()
             handleWhatsApp()
           }}
-          className="h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-[0.97] touch-manipulation"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -207,7 +233,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
         <Button
           onClick={handleDirections}
-          className="h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-[0.97] touch-manipulation"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -235,7 +261,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
         <Link
           href="/reviews"
           onClick={(e) => e.stopPropagation()}
-          className="h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-[0.97] touch-manipulation"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(234, 179, 8, 0.25), 0 4px 8px rgba(234, 179, 8, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -259,7 +285,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
         <Button
           onClick={handleShare}
-          className="h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-[0.97] touch-manipulation"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -282,65 +308,149 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
         </Button>
       </div>
 
-      {/* Save Contact & View Gallery buttons */}
+      {/* Products & Brochures buttons – smooth scroll to home sections */}
       <div className="grid grid-cols-2 gap-2">
         <Button
-          onClick={handleSaveContact}
-          className="h-11 bg-white/80 hover:bg-white/90 backdrop-blur-md text-slate-700 font-medium rounded-2xl shadow-lg border-2 border-emerald-500/70 hover:border-emerald-600/90 relative overflow-hidden transition-all"
-          style={{
-            boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.4), 0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          onClick={(e) => {
+            e.stopPropagation()
+            scrollToSection('products')
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 0 2px rgba(16, 185, 129, 0.5), 0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 0 0 rgba(16, 185, 129, 0.4), 0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          {/* Animated border highlight glow */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent animate-[shimmer_2s_infinite] pointer-events-none" />
-          <div className="relative z-10 flex items-center">
-            <Download className="w-4 h-4 mr-2" />
-            {t('saveContact')}
-          </div>
-        </Button>
-        <Link 
-          href="/gallery" 
-          className="h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-[0.97] touch-manipulation"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
           style={{
             color: '#0F172A',
-            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            boxShadow:
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
-            transform: 'translateY(-1px)'
+            transform: 'translateY(-1px)',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+            e.currentTarget.style.boxShadow =
+              '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
             e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.boxShadow =
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>View Gallery</span>
-          <div className="flex items-center gap-0.5">
-            <Image
-              src="/gallery/81947586-5d98-4cd1-83f8-621a036ede24.jpg"
-              alt="Gallery"
-              width={14}
-              height={14}
-              className="rounded-sm object-cover border border-slate-200"
-            />
-            <Image
-              src="/gallery/67bdec89-1436-492e-b9b9-a4f7f4e6f01b.jpg"
-              alt="Gallery"
-              width={14}
-              height={14}
-              className="rounded-sm object-cover border border-slate-200"
-            />
+          <Package className="w-4 h-4" style={{ color: '#1D4ED8' }} />
+          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
+            Products
+          </span>
+        </Button>
+
+        <Button
+          onClick={(e) => {
+            e.stopPropagation()
+            scrollToSection('brochures')
+          }}
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          style={{
+            color: '#0F172A',
+            boxShadow:
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            borderRadius: '16px',
+            fontSize: '14px',
+            WebkitTapHighlightColor: 'transparent',
+            transform: 'translateY(-1px)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+            e.currentTarget.style.transform = 'translateY(-2px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.transform = 'translateY(-1px)'
+          }}
+        >
+          <FileText className="w-4 h-4" style={{ color: '#CA8A04' }} />
+          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
+            Brochures
+          </span>
+        </Button>
+      </div>
+
+      {/* Save Contact & View Gallery — Mango shimmer + 2-circle gallery preview */}
+      <div className="grid grid-cols-2 gap-2 w-full min-w-0">
+        <Button
+          onClick={handleSaveContact}
+          className="w-full min-w-0 h-11 bg-white/90 hover:bg-white backdrop-blur-md text-slate-700 rounded-2xl border-2 border-blue-500/70 hover:border-blue-600/90 relative overflow-hidden transition-all touch-manipulation"
+          style={{
+            boxShadow:
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            borderRadius: '16px',
+            fontSize: '14px',
+            WebkitTapHighlightColor: 'transparent',
+            transform: 'translateY(-1px)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 10px 20px rgba(59, 130, 246, 0.25), 0 6px 12px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+            e.currentTarget.style.transform = 'translateY(-2px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.transform = 'translateY(-1px)'
+          }}
+        >
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-[shimmer_2s_infinite] pointer-events-none" />
+          <div className="relative z-10 flex items-center justify-center gap-2">
+            <Download className="w-4 h-4" style={{ color: '#1D4ED8' }} />
+            <span className="text-sm font-bold truncate" style={{ fontSize: '14px' }}>
+              {t('saveContact')}
+            </span>
           </div>
+        </Button>
+
+        <Link
+          href="/gallery"
+          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          style={{
+            color: '#0F172A',
+            boxShadow:
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            borderRadius: '16px',
+            WebkitTapHighlightColor: 'transparent',
+            fontSize: '14px',
+            transform: 'translateY(-1px)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+            e.currentTarget.style.transform = 'translateY(-2px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow =
+              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.transform = 'translateY(-1px)'
+          }}
+        >
+          <div className="flex items-center -space-x-1.5 relative z-10">
+            {GALLERY_ITEMS.slice(0, 2).map((item) => (
+              <div
+                key={item.src}
+                className="w-7 h-7 rounded-full bg-white flex items-center justify-center overflow-hidden relative border border-white"
+                style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)' }}
+              >
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={28}
+                  height={28}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+          <span className="text-sm font-bold truncate" style={{ color: '#0F172A', fontSize: '14px' }}>
+            Gallery
+          </span>
         </Link>
       </div>
       </div>

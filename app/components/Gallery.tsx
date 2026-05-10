@@ -1,90 +1,97 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Play } from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { ArrowRight } from 'lucide-react'
+import { GALLERY_ITEMS } from '../data/galleryImages'
 
-const galleryImages = [
-  { src: '/gallery/81947586-5d98-4cd1-83f8-621a036ede24.jpg', alt: 'Tiles display 1' },
-  { src: '/gallery/67bdec89-1436-492e-b9b9-a4f7f4e6f01b.jpg', alt: 'Tiles display 2' },
-  { src: '/gallery/9c2f479d-8027-4f20-9102-4a360cb91c5c.jpg', alt: 'Tiles display 3' },
-  { src: '/gallery/7e768fdd-6abc-4bf7-9919-d8b6b432afba.jpg', alt: 'Tiles display 4' },
-  { src: '/gallery/d2356eb6-ad0c-41d1-9057-ff587d296666.jpg', alt: 'Tiles display 5' },
-  { src: '/gallery/c30c8f8d-e079-422a-a55c-be8c8f428521.jpg', alt: 'Tiles display 6' },
-]
+const visibleItems = GALLERY_ITEMS.slice(0, 4)
 
 export default function Gallery() {
-  const displayImages = galleryImages.slice(0, 4)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      visibleItems.forEach(({ src }) => {
+        const img = document.createElement('img')
+        img.src = src
+      })
+    }
+  }, [])
+
+  const handleImageClick = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('fromGallery', 'true')
+    }
+    router.push('/gallery')
+  }
 
   return (
     <section id="gallery" className="w-full max-w-md mx-auto px-4 pt-8 pb-6">
-      <div className="flex items-center justify-between mb-5 px-2">
-        <h2 className="text-2xl font-bold text-white tracking-tight">
-          Gallery
-        </h2>
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="mb-6"
+      >
+        <div className="section-title-accent mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight text-left">
+            Gallery
+          </h2>
+        </div>
+        <p className="text-sm sm:text-base text-slate-300/90 font-normal text-left">
+          Moments at Jay Ess Traders
+        </p>
+      </motion.div>
 
-      <div className="grid grid-cols-2 gap-3">
-        {/* First 2 Images - Row 1 */}
-        {displayImages.slice(0, 2).map((image, index) => (
-          <Link key={index} href="/gallery">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: index * 0.03, duration: 0.3 }}
-              className="rounded-2xl shadow-md aspect-square overflow-hidden cursor-pointer group hover:shadow-lg transition-all"
-              style={{ backgroundColor: '#FDFFFF', willChange: 'opacity' }}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={400}
-                height={400}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </motion.div>
-          </Link>
-        ))}
-
-        {/* Next 2 Images - Row 2 */}
-        {displayImages.slice(2, 4).map((image, index) => (
-          <Link key={index + 2} href="/gallery">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: (index + 2) * 0.03, duration: 0.3 }}
-              className="rounded-2xl shadow-md aspect-square overflow-hidden cursor-pointer group hover:shadow-lg transition-all"
-              style={{ backgroundColor: '#FDFFFF', willChange: 'opacity' }}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={400}
-                height={400}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </motion.div>
-          </Link>
+      <div className="grid grid-cols-2 gap-3.5">
+        {visibleItems.map(({ src, alt }, index) => (
+          <motion.div
+            key={`gallery-${index}-${src}`}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={{ delay: index * 0.06, duration: 0.3 }}
+            className="relative aspect-square rounded-[24px] overflow-hidden shadow-[0_18px_36px_rgba(0,0,0,0.24)] cursor-pointer group border border-white/10"
+            onClick={handleImageClick}
+          >
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 448px) 50vw, 224px"
+              priority={index < 2}
+            />
+            <div className="absolute inset-[1px] rounded-[23px] border border-white/10 z-[1]" />
+            <div className="absolute inset-x-6 top-4 h-10 rounded-full bg-white/12 blur-2xl z-[1]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent group-hover:from-black/60 transition-colors" />
+          </motion.div>
         ))}
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true }}
         transition={{ delay: 0.15, duration: 0.3 }}
         className="mt-5"
       >
         <Link
           href="/gallery"
-          className="block w-full bg-white text-slate-800 font-semibold py-3 px-4 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              sessionStorage.setItem('fromGallery', 'true')
+            }
+          }}
+          className="btn-primary block w-full font-bold py-4 px-6 rounded-2xl shadow-[0_18px_34px_rgba(16,185,129,0.28)] hover:shadow-[0_22px_40px_rgba(16,185,129,0.34)] transition-all flex items-center justify-center gap-2"
         >
-          View More
-          <ArrowRight className="w-4 h-4" />
+          View Gallery
+          <ArrowRight className="w-5 h-5" />
         </Link>
       </motion.div>
     </section>

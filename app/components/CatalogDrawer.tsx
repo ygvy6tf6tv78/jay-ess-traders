@@ -50,24 +50,22 @@ export default function CatalogDrawer({
             <div className="grid grid-cols-2 gap-3">
               {item.images.slice(0, 6).map((img, index) => (
                 <div
-                  key={index}
+                  key={`${item.id}-gal-${index}`}
                   className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden"
                 >
-                  <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                    <span className="bg-gray-200 px-3 py-2 rounded">
-                      Image {index + 1}
-                    </span>
-                  </div>
+                  <Image
+                    src={img}
+                    alt={`${item.title} ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 50vw, 200px"
+                  />
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-3">
-              * Images are placeholders. Upload product images to /public/gallery
-            </p>
           </div>
         </div>
       </SheetContent>
     </Sheet>
   )
 }
-

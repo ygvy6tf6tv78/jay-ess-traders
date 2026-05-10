@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Hero from './components/Hero'
 import About from './components/About'
+import WhyChooseUs from './components/WhyChooseUs'
 import Catalog from './components/Catalog'
 import Brochures from './components/Brochures'
 import Gallery from './components/Gallery'
@@ -65,6 +66,7 @@ export default function Home() {
           <About />
           <Catalog />
           <Brochures />
+          <WhyChooseUs />
           <Gallery />
           <GoogleReviews />
           <SocialConnect />

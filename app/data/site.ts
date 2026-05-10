@@ -1,6 +1,17 @@
+import { galleryPhotoSrcList } from './galleryImages'
+
+/** Shared showcase URLs for catalog detail lightboxes — uses showroom photos until brand-specific assets exist. */
+const catalogGallerySrcs = galleryPhotoSrcList()
+
 export const siteConfig = {
   name: "Jay Ess Traders",
   tagline: "Exclusive Dealer of Simpolo Tiles and Bath",
+  serviceTagline: "Tiles • Bathware • Switches • Paints",
+  keywordBadges: [
+    "Authorised Dealer",
+    "Curated Premium Range",
+    "Quick Delivery",
+  ] as string[],
   url: "https://jayess.onelink.cards",
   
   contact: {
@@ -55,14 +66,7 @@ export const siteConfig = {
       description: "Floor and wall tiles for homes and commercial spaces.",
       logo: "/logos/simpolo.png",
       details: "Explore our extensive range of Simpolo tiles including vitrified, ceramic, glazed vitrified tiles (GVT), and double charge tiles. Perfect for residential and commercial applications with superior strength and aesthetics.",
-      images: [
-        "/gallery/tiles-1.jpg",
-        "/gallery/tiles-2.jpg",
-        "/gallery/tiles-3.jpg",
-        "/gallery/tiles-4.jpg",
-        "/gallery/tiles-5.jpg",
-        "/gallery/tiles-6.jpg",
-      ],
+      images: catalogGallerySrcs,
     },
     {
       id: "jaquar-bathware",
@@ -70,14 +74,7 @@ export const siteConfig = {
       description: "Faucets, showers, sanitaryware, wellness range.",
       logo: "/logos/jaquar.jpg",
       details: "Complete bathroom solutions featuring premium faucets, rain showers, sanitaryware, wellness products, and accessories. Experience luxury and innovation in every product.",
-      images: [
-        "/gallery/bath-1.jpg",
-        "/gallery/bath-2.jpg",
-        "/gallery/bath-3.jpg",
-        "/gallery/bath-4.jpg",
-        "/gallery/bath-5.jpg",
-        "/gallery/bath-6.jpg",
-      ],
+      images: catalogGallerySrcs,
     },
     {
       id: "legrand-switches",
@@ -85,14 +82,7 @@ export const siteConfig = {
       description: "Switches, sockets, MCBs, modular systems.",
       logo: "/logos/legrand.jpg",
       details: "World-class electrical solutions including modular switches, sockets, distribution boards, MCBs, and home automation systems. Safety meets elegance.",
-      images: [
-        "/gallery/switches-1.jpg",
-        "/gallery/switches-2.jpg",
-        "/gallery/switches-3.jpg",
-        "/gallery/switches-4.jpg",
-        "/gallery/switches-5.jpg",
-        "/gallery/switches-6.jpg",
-      ],
+      images: catalogGallerySrcs,
     },
     {
       id: "nerolac-paints",
@@ -100,14 +90,7 @@ export const siteConfig = {
       description: "Interior and exterior paints with expert shade guidance.",
       logo: "/logos/images.jpeg",
       details: "Comprehensive range of interior and exterior emulsions, wood finishes, and protective coatings. Get expert color consultation and shade selection guidance.",
-      images: [
-        "/gallery/paint-1.jpg",
-        "/gallery/paint-2.jpg",
-        "/gallery/paint-3.jpg",
-        "/gallery/paint-4.jpg",
-        "/gallery/paint-5.jpg",
-        "/gallery/paint-6.jpg",
-      ],
+      images: catalogGallerySrcs,
     },
   ],
   

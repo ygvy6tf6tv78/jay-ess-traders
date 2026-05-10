@@ -9,6 +9,124 @@
   }
 }
 
+/* ===== CA / Mango premium design system — Jay Ess emerald variant ===== */
+
+/* Section title with trailing gradient line (Mango "Our Menu" treatment, emerald for Jay Ess) */
+.section-title-accent {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.section-title-accent::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  min-width: 2rem;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.7), rgba(16, 185, 129, 0));
+}
+
+/* Inside dark emerald shells, switch the accent line to a brighter emerald for visibility */
+.section-shell-emerald .section-title-accent::after {
+  background: linear-gradient(90deg, rgba(110, 231, 183, 0.85), rgba(110, 231, 183, 0));
+}
+
+/* Premium section shell (Mango "Get in Touch" outer wrapper) – Jay Ess emerald variant */
+.section-shell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  isolation: isolate;
+}
+
+.section-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 40%, rgba(16, 185, 129, 0.30) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.section-shell::after {
+  content: '';
+  position: absolute;
+  right: -5rem;
+  bottom: -6rem;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.section-shell-emerald {
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  background: linear-gradient(145deg, rgba(15, 76, 64, 0.98) 0%, rgba(8, 56, 47, 0.99) 45%, rgba(4, 38, 32, 0.99) 100%);
+  box-shadow: 0 24px 70px rgba(2, 24, 18, 0.42), 0 8px 24px rgba(4, 120, 87, 0.24);
+}
+
+/* Get in Touch — Mango "section-shell-green" exact palette */
+.section-shell-green {
+  border: 1px solid rgba(251, 236, 137, 0.18);
+  background: linear-gradient(145deg, rgba(47, 107, 85, 0.98) 0%, rgba(30, 77, 61, 0.98) 45%, rgba(21, 58, 44, 0.99) 100%);
+  box-shadow: 0 24px 70px rgba(6, 16, 12, 0.34), 0 8px 24px rgba(30, 77, 61, 0.22);
+}
+
+.section-shell-green .section-title-accent::after {
+  background: linear-gradient(90deg, rgba(251, 236, 137, 0.85), rgba(251, 236, 137, 0));
+}
+
+.section-shell.section-shell-green::after {
+  background: radial-gradient(circle, rgba(251, 236, 137, 0.18), transparent 70%);
+}
+
+.section-shell.section-shell-green::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 40%, rgba(251, 236, 137, 0.18) 100%);
+}
+
+/* Why Choose Us — Dogra-style blue shell + teal glow (Jay Ess) */
+.section-shell-blue {
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  background: linear-gradient(145deg, rgba(30, 58, 95, 0.98) 0%, rgba(30, 64, 110, 0.99) 42%, rgba(15, 52, 72, 0.99) 100%);
+  box-shadow: 0 24px 70px rgba(8, 16, 28, 0.38), 0 8px 24px rgba(14, 116, 144, 0.22);
+}
+
+.section-shell-blue .section-title-accent::after {
+  background: linear-gradient(90deg, rgba(147, 197, 253, 0.88), rgba(94, 234, 212, 0.35), rgba(147, 197, 253, 0));
+}
+
+.section-shell.section-shell-blue::after {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+}
+
+.section-shell.section-shell-blue::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 40%, rgba(59, 130, 246, 0.28) 100%);
+}
+
+.section-shell-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Initialize UI bottom variable */
+:root {
+  --ui-bottom: 0px;
+}
+
+/* Primary button – emerald palette (Jay Ess) */
+.btn-primary {
+  background: linear-gradient(135deg, #047857 0%, #10B981 100%) !important;
+  color: white !important;
+}
+.btn-primary:hover {
+  opacity: 0.94;
+}
+
 @layer base {
   * {
     scroll-behavior: smooth;
@@ -236,3 +354,4 @@ body:has(.yarl__root) {
     transform: translateX(100%);
   }
 }
+

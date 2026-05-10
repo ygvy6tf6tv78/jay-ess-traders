@@ -20,20 +20,6 @@ interface PaymentFaceProps {
   onBack: () => void
 }
 
-// Build UPI deep link - Secure and properly encoded
-function buildUpiLink(upiId: string, upiName: string, amount?: number): string {
-  // URLSearchParams automatically encodes special characters like @
-  const params = new URLSearchParams({
-    pa: upiId, // Payee Address (UPI ID) - @ symbol will be encoded as %40
-    pn: upiName, // Payee Name
-    cu: 'INR', // Currency
-  })
-  if (amount && amount > 0) {
-    params.set('am', amount.toString())
-  }
-  return `upi://pay?${params.toString()}`
-}
-
 // Copy to clipboard with toast
 function useCopyToClipboard() {
   const [copied, setCopied] = useState(false)
@@ -68,119 +54,6 @@ export default function PaymentFace({
   const { copy: copyIFSC, copied: ifscCopied } = useCopyToClipboard()
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [bankTransferModalOpen, setBankTransferModalOpen] = useState(false)
-
-  const upiLink = buildUpiLink(upiId, upiName, amountINR)
-
-  // Build Paytm app deep link with UPI ID - Secure and optimized
-  const buildPaytmLink = () => {
-    // URLSearchParams automatically encodes @ symbol as %40
-    const params = new URLSearchParams({
-      pa: upiId, // Payee Address (UPI ID) - Same account for all apps
-      pn: upiName, // Payee Name
-      cu: 'INR', // Currency
-    })
-    if (amountINR && amountINR > 0) {
-      params.set('am', amountINR.toString()) // Amount
-    }
-    // Paytm deep link - opens Paytm app directly with pre-filled UPI ID
-    return `paytmmp://pay?${params.toString()}`
-  }
-
-  // Build Google Pay deep link - Secure and optimized
-  const buildGooglePayLink = () => {
-    // URLSearchParams automatically encodes @ symbol as %40
-    const params = new URLSearchParams({
-      pa: upiId, // Payee Address (UPI ID) - Same account for all apps
-      pn: upiName, // Payee Name
-      cu: 'INR', // Currency
-    })
-    if (amountINR && amountINR > 0) {
-      params.set('am', amountINR.toString()) // Amount
-    }
-    // Google Pay deep link - opens Google Pay app directly with pre-filled UPI ID
-    return `tez://upi/pay?${params.toString()}`
-  }
-
-  // Build PhonePe UPI link - Secure and optimized
-  const buildPhonePeLink = () => {
-    // URLSearchParams automatically encodes @ symbol as %40
-    const params = new URLSearchParams({
-      pa: upiId, // Payee Address (UPI ID) - Same account for all apps
-      pn: upiName, // Payee Name
-      cu: 'INR', // Currency
-    })
-    if (amountINR && amountINR > 0) {
-      params.set('am', amountINR.toString()) // Amount
-    }
-    // PhonePe deep link - opens PhonePe app directly with pre-filled UPI ID
-    return `phonepe://pay?${params.toString()}`
-  }
-
-  const handlePayWithPaytm = () => {
-    try {
-      const paytmLink = buildPaytmLink()
-      setPaymentModalOpen(false)
-      
-      // Open Paytm app with UPI ID pre-filled
-      window.location.href = paytmLink
-      
-      // Smart fallback: if Paytm app doesn't open, use standard UPI link
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          // App didn't open, fallback to standard UPI
-          window.open(upiLink, '_blank')
-        }
-      }, 1500)
-    } catch (error) {
-      // Fallback to standard UPI link on error
-      window.open(upiLink, '_blank')
-      setPaymentModalOpen(false)
-    }
-  }
-
-  const handlePayWithGooglePay = () => {
-    try {
-      const googlePayLink = buildGooglePayLink()
-      setPaymentModalOpen(false)
-      
-      // Open Google Pay app with UPI ID pre-filled
-      window.location.href = googlePayLink
-      
-      // Smart fallback: if Google Pay app doesn't open, use standard UPI link
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          // App didn't open, fallback to standard UPI
-          window.open(upiLink, '_blank')
-        }
-      }, 1500)
-    } catch (error) {
-      // Fallback to standard UPI link on error
-      window.open(upiLink, '_blank')
-      setPaymentModalOpen(false)
-    }
-  }
-
-  const handlePayWithPhonePe = () => {
-    try {
-      const phonePeLink = buildPhonePeLink()
-      setPaymentModalOpen(false)
-      
-      // Open PhonePe app with UPI ID pre-filled
-      window.location.href = phonePeLink
-      
-      // Smart fallback: if PhonePe app doesn't open, use standard UPI link
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          // App didn't open, fallback to standard UPI
-          window.open(upiLink, '_blank')
-        }
-      }, 1500)
-    } catch (error) {
-      // Fallback to standard UPI link on error
-      window.open(upiLink, '_blank')
-      setPaymentModalOpen(false)
-    }
-  }
 
   const handleCopyUpi = () => {
     copyUpi(upiId)
@@ -230,12 +103,13 @@ export default function PaymentFace({
 
   return (
     <div
-      className="rounded-[28px] shadow-2xl overflow-y-auto border border-slate-800 relative w-full"
+      className="rounded-[24px] shadow-2xl overflow-y-auto border border-slate-700/80 relative w-full"
       style={{
-        background: 'radial-gradient(circle at 50% 50%, #157C82 0%, #111315 100%)',
+        background:
+          'radial-gradient(circle at 50% 50%, #1FB6D9 0%, #0E7490 50%, #111315 100%)',
         backfaceVisibility: 'hidden',
         willChange: 'transform',
-        minHeight: '580px'
+        minHeight: '580px',
       }}
     >
       {/* Grain overlay */}
@@ -287,8 +161,14 @@ export default function PaymentFace({
                   e.stopPropagation()
                   setBankTransferModalOpen(true)
                 }}
-                className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#6D28D9] text-white font-bold py-3 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2 cursor-pointer relative z-20 touch-manipulation"
-                style={{ WebkitTapHighlightColor: 'transparent' }}
+                className="w-full text-white font-bold py-3.5 px-6 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer relative z-20 touch-manipulation"
+                style={{
+                  WebkitTapHighlightColor: 'transparent',
+                  background:
+                    'linear-gradient(135deg, #0E7490 0%, #1FB6D9 50%, #0E7490 100%)',
+                  boxShadow:
+                    '0 4px 16px rgba(14, 116, 144, 0.3), 0 2px 8px rgba(14, 116, 144, 0.2)',
+                }}
                 aria-label={t('transferViaBank')}
               >
                 <CreditCard className="w-5 h-5 pointer-events-none" />
@@ -314,8 +194,13 @@ export default function PaymentFace({
                 e.stopPropagation()
                 setPaymentModalOpen(true)
               }}
-              className="w-full bg-[#00BAF2] hover:bg-[#0099CC] text-white font-bold py-3 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 cursor-pointer relative z-30 touch-manipulation"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
+              className="w-full text-white font-bold py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 cursor-pointer relative z-30 touch-manipulation"
+              style={{
+                WebkitTapHighlightColor: 'transparent',
+                background: 'linear-gradient(135deg, #0E7490 0%, #1FB6D9 50%, #0E7490 100%)',
+                boxShadow:
+                  '0 4px 16px rgba(14, 116, 144, 0.3), 0 2px 8px rgba(14, 116, 144, 0.2)',
+              }}
               aria-label="Pay via UPI"
             >
               {/* Horizontal Payment Logos */}
@@ -428,16 +313,17 @@ export default function PaymentFace({
         </div>
       </motion.div>
 
-      {/* Payment Options Modal - Same Card */}
+      {/* Pay via UPI ID — Copy Model Modal (Mango/CA pattern) */}
       <AnimatePresence>
         {paymentModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 rounded-[28px] flex items-center justify-center"
+            className="absolute inset-0 z-50 rounded-[24px] flex items-center justify-center"
             style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(21, 124, 130, 0.95) 0%, rgba(17, 19, 21, 0.98) 100%)',
+              background:
+                'radial-gradient(circle at 50% 50%, rgba(31, 182, 217, 0.95) 0%, rgba(14, 116, 144, 0.95) 50%, rgba(17, 19, 21, 0.98) 100%)',
               backdropFilter: 'blur(10px)',
             }}
             onClick={(e) => {
@@ -448,7 +334,7 @@ export default function PaymentFace({
           >
             {/* Grain overlay */}
             <div
-              className="absolute inset-0 opacity-[0.06] pointer-events-none rounded-[28px]"
+              className="absolute inset-0 opacity-[0.06] pointer-events-none rounded-[24px]"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
               }}
@@ -460,104 +346,76 @@ export default function PaymentFace({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="relative z-50 w-full max-w-sm px-6"
+              className="relative z-50 w-full max-w-md px-6"
               onClick={(e) => e.stopPropagation()}
               style={{ pointerEvents: 'auto' }}
             >
-              <h3 className="text-2xl font-black text-white mb-6 tracking-tight drop-shadow-lg text-center">
-                Choose Payment App
+              <h3 className="text-2xl font-black text-white mb-4 tracking-tight drop-shadow-lg text-center">
+                Pay via UPI ID
               </h3>
-              
-              <div className="space-y-3 mb-4 relative z-30">
-                {/* Paytm Button - Blur Background */}
-                <motion.button
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    handlePayWithPaytm()
-                  }}
-                  className="w-full bg-[#00BAF2]/20 hover:bg-[#00BAF2]/30 backdrop-blur-md border-2 border-[#00BAF2]/50 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 py-3 px-6 cursor-pointer touch-manipulation"
-                  style={{ 
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto',
-                    WebkitTouchCallout: 'none',
-                    userSelect: 'none'
-                  }}
-                  aria-label="Pay with Paytm"
-                >
-                  <Image
-                    src="/logos/icons8-paytm-48.png"
-                    alt="Paytm"
-                    width={28}
-                    height={28}
-                    className="w-7 h-7 object-contain"
-                    style={{ pointerEvents: 'none' }}
-                  />
-                  <span className="text-white font-bold text-base">Paytm</span>
-                </motion.button>
 
-                {/* Google Pay Button - Blur Background */}
-                <motion.button
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    handlePayWithGooglePay()
-                  }}
-                  className="w-full bg-[#4285F4]/20 hover:bg-[#4285F4]/30 backdrop-blur-md border-2 border-[#4285F4]/50 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 py-3 px-6 cursor-pointer touch-manipulation"
-                  style={{ 
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto',
-                    WebkitTouchCallout: 'none',
-                    userSelect: 'none'
-                  }}
-                  aria-label="Pay with Google Pay"
-                >
-                  <Image
-                    src="/logos/icons8-google-pay-48.png"
-                    alt="Google Pay"
-                    width={28}
-                    height={28}
-                    className="w-7 h-7 object-contain"
-                    style={{ pointerEvents: 'none' }}
-                  />
-                  <span className="text-white font-bold text-base">Google Pay</span>
-                </motion.button>
+              <div className="mb-4 relative z-30 space-y-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-xl">
+                  <p className="text-white/70 text-xs mb-3 text-center tracking-wide uppercase font-medium">
+                    UPI ID
+                  </p>
 
-                {/* PhonePe Button - Blur Background */}
-                <motion.button
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    handlePayWithPhonePe()
-                  }}
-                  className="w-full bg-[#5F259F]/20 hover:bg-[#5F259F]/30 backdrop-blur-md border-2 border-[#5F259F]/50 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 py-3 px-6 cursor-pointer touch-manipulation"
-                  style={{ 
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto',
-                    WebkitTouchCallout: 'none',
-                    userSelect: 'none'
-                  }}
-                  aria-label="Pay with PhonePe"
-                >
-                  <Image
-                    src="/logos/icons8-phone-pe-48.png"
-                    alt="PhonePe"
-                    width={28}
-                    height={28}
-                    className="w-7 h-7 object-contain"
-                    style={{ pointerEvents: 'none' }}
-                  />
-                  <span className="text-white font-bold text-base">PhonePe</span>
-                </motion.button>
+                  {/* UPI ID display + copy button */}
+                  <div className="bg-white/5 rounded-xl p-4 mb-3 border border-white/10">
+                    <div className="flex items-center justify-between gap-3">
+                      <p
+                        className="text-white font-bold text-base break-all select-all"
+                        style={{ wordBreak: 'break-all', lineHeight: '1.35' }}
+                      >
+                        {upiId}
+                      </p>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleCopyUpi()
+                        }}
+                        className="shrink-0 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold px-3 rounded-xl border border-white/30 transition-all cursor-pointer flex items-center justify-center gap-2"
+                        style={{ WebkitTapHighlightColor: 'transparent' }}
+                        aria-label="Copy UPI ID"
+                      >
+                        {upiCopied ? (
+                          <>
+                            <Check className="w-4 h-4" />
+                            <span className="text-xs font-bold">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-4 h-4" />
+                            <span className="text-xs font-bold">Copy</span>
+                          </>
+                        )}
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  {/* Step instructions */}
+                  <div className="grid grid-cols-1 gap-2.5 text-white/80 text-xs pt-2 border-t border-white/10">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
+                      <span>Open any UPI app (GPay, PhonePe, Paytm, BHIM).</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
+                      <span>Choose &quot;Pay to UPI ID&quot; and paste the copied ID.</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
+                      <span>Enter amount and complete the payment.</span>
+                    </div>
+                  </div>
+
+                  <p className="text-white/90 text-sm text-center font-medium mt-3">
+                    After payment, please share screenshot on WhatsApp.
+                  </p>
+                </div>
               </div>
 
               {/* Close Button */}
@@ -587,9 +445,9 @@ export default function PaymentFace({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 rounded-[28px] flex items-center justify-center"
+            className="absolute inset-0 z-50 rounded-[24px] flex items-center justify-center"
             style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(21, 124, 130, 0.95) 0%, rgba(17, 19, 21, 0.98) 100%)',
+              background: 'radial-gradient(circle at 50% 50%, rgba(31, 182, 217, 0.95) 0%, rgba(14, 116, 144, 0.95) 50%, rgba(17, 19, 21, 0.98) 100%)',
               backdropFilter: 'blur(10px)',
             }}
             onClick={(e) => {
@@ -600,7 +458,7 @@ export default function PaymentFace({
           >
             {/* Grain overlay */}
             <div
-              className="absolute inset-0 opacity-[0.06] pointer-events-none rounded-[28px]"
+              className="absolute inset-0 opacity-[0.06] pointer-events-none rounded-[24px]"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
               }}

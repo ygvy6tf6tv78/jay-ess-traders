@@ -25,7 +25,7 @@ export default function SocialConnect() {
         <div className="flex items-center justify-center gap-3 mb-4">
           <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md border-2 border-pink-200 overflow-hidden">
             <Image
-              src="/logos/jay-ess-logo.jpg"
+              src="/logos/541185191_17855456889513750_6148655236123844473_n.jpg"
               alt="Jay Ess Traders"
               width={56}
               height={56}

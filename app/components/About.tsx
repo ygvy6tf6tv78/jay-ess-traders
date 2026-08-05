@@ -20,7 +20,7 @@ export default function About() {
 
           <div className="relative">
             <div className="section-title-accent mb-4">
-              <h2 className="text-[28px] sm:text-[32px] font-black leading-tight text-white tracking-[-0.02em] text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-white tracking-tight text-left">
                 {siteConfig.about.title}
               </h2>
             </div>

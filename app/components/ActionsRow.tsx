@@ -108,7 +108,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
   return (
     <>
-      <div className="grid w-full min-w-0 max-w-full grid-cols-2 gap-2.5" onClick={(e) => e.stopPropagation()}>
+      <div className="grid w-full min-w-0 max-w-full grid-cols-2 gap-x-2 gap-y-3" onClick={(e) => e.stopPropagation()}>
         {/* Row 1: Call Now + Payment — Mango gradient + sizing */}
         <div className="contents">
           <Button

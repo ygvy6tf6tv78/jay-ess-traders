@@ -140,8 +140,8 @@ export const siteConfig = {
   },
   
   seo: {
-    title: "Jay Ess Traders - Premium Tiles, Bathware, Switches & Paint | Akhnoor",
-    description: "Exclusive dealer of Simpolo Tiles, Jaquar Bathware, Legrand Switches, and Berger Paints in Akhnoor. Visit our store for premium building materials and expert guidance.",
+    title: "Jay Ess Traders | Premium Tiles, Bathware, Switches & Paints in Akhnoor",
+    description: "Jay Ess Traders in Akhnoor offers premium Simpolo tiles, Jaquar bathware, Legrand switches and Berger paints with expert product guidance.",
     keywords: "tiles akhnoor, bathware akhnoor, simpolo tiles, jaquar bathware, legrand switches, berger paints, building materials akhnoor",
   },
   

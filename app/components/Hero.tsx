@@ -140,7 +140,7 @@ export default function Hero() {
 
             {/* Content */}
             <div
-              className="relative z-[5] px-5 pb-5 pt-3 max-w-full"
+              className="relative z-[5] px-4 sm:px-5 pb-6 pt-3 max-w-full"
               style={{
                 background:
                   'linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.95) 36%, rgba(255,255,255,0.98) 100%)',

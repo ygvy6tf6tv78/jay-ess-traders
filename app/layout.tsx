@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { siteConfig } from './data/site'
@@ -13,8 +13,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Smart Digital Business Card',
-  description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
+  metadataBase: new URL(siteConfig.url),
+  title: siteConfig.seo.title,
+  description: siteConfig.seo.description,
   keywords: siteConfig.seo.keywords,
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.credits.designer,
@@ -22,33 +23,35 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: 'Smart Digital Business Card',
-    description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
+    title: siteConfig.seo.title,
+    description: siteConfig.seo.description,
     siteName: siteConfig.name,
     images: [
       {
-        url: '/logos/541185191_17855456889513750_6148655236123844473_n.jpg',
+        url: `${siteConfig.url}/og`,
         width: 1200,
         height: 630,
-        alt: siteConfig.name,
+        alt: 'Jay Ess Traders — Premium Tiles, Bathware, Switches and Paints in Akhnoor',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Smart Digital Business Card',
-    description: 'One smart link for Call, WhatsApp, Location, Reviews, Menu and Payments.',
-    images: ['/logos/541185191_17855456889513750_6148655236123844473_n.jpg'],
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
+    title: siteConfig.seo.title,
+    description: siteConfig.seo.description,
+    images: [`${siteConfig.url}/og`],
   },
   robots: {
     index: true,
     follow: true,
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
@@ -61,7 +64,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: siteConfig.name,
-    description: siteConfig.tagline,
+    description: siteConfig.seo.description,
     url: siteConfig.url,
     telephone: `+91${typeof siteConfig.contact.phones[0] === 'string' ? siteConfig.contact.phones[0] : siteConfig.contact.phones[0].number}`,
     email: siteConfig.contact.email,

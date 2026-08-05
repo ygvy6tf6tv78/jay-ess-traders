@@ -125,12 +125,12 @@ export default function Brochures() {
               </span>
             </div>
 
-            <div className="flex min-h-[58px] w-full flex-col justify-between bg-white px-2.5 py-2">
+            <div className="flex min-h-[52px] w-full flex-col justify-between bg-white px-2.5 py-2">
               <h3 className="text-slate-950 font-black text-[12.5px] leading-tight line-clamp-1">
                 {brochure.title}
               </h3>
-              <span className="mt-1.5 inline-flex h-6 items-center justify-between rounded-lg bg-[#F4F8FC] px-2 text-[9.5px] font-black text-[#075A9C] ring-1 ring-sky-100">
-                View Brochure <ArrowUpRight className="h-3 w-3" strokeWidth={2.5} />
+              <span className="mt-1.5 inline-flex h-7 w-fit items-center gap-1.5 rounded-full bg-[#EEF7FF] px-2.5 text-[10px] font-black text-[#075A9C] ring-1 ring-sky-200/80">
+                View Brochure <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
               </span>
             </div>
           </motion.button>

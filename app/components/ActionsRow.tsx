@@ -332,9 +332,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           style={{
             color: '#0F172A',
             background: '#FFFFFF',
-            borderColor: 'rgba(29, 78, 216, 0.24)',
+            borderColor: 'rgba(10, 143, 199, 0.2)',
             boxShadow:
-              '0 9px 18px rgba(29, 78, 216, 0.14), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
+              '0 8px 16px rgba(7, 90, 156, 0.11), 0 4px 8px rgba(15, 23, 42, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.92)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
@@ -342,16 +342,16 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+              '0 10px 20px rgba(7, 90, 156, 0.16), 0 5px 10px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.96)'
             e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 9px 18px rgba(29, 78, 216, 0.14), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)'
+              '0 8px 16px rgba(7, 90, 156, 0.11), 0 4px 8px rgba(15, 23, 42, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.92)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <Files className="h-5 w-5 shrink-0" style={{ color: '#1D4ED8' }} strokeWidth={2.5} />
+          <Files className="h-5 w-5 shrink-0" style={{ color: '#075A9C' }} strokeWidth={2.4} />
           <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
             Brochures
           </span>

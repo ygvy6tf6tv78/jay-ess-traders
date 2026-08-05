@@ -61,7 +61,10 @@ export default function Home() {
         {showLoading && <LoadingScreen key="loading" />}
       </AnimatePresence>
       {!showLoading && (
-        <main className="min-h-screen pb-12 relative z-10">
+        <main
+          className="min-h-screen pb-12 relative z-10 overflow-x-hidden pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]"
+          style={{ background: '#191A19' }}
+        >
           <Hero />
           <About />
           <Catalog />

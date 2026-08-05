@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Phone, Download, Share2, Navigation, CreditCard, MapPin, Star, X, Package, FileText } from 'lucide-react'
+import { Phone, Download, Share2, MapPin, Star, X, PackageCheck, FileText, BookOpen, Headphones } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -108,9 +108,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
   return (
     <>
-      <div className="space-y-3 w-full max-w-full min-w-0" onClick={(e) => e.stopPropagation()}>
+      <div className="grid w-full min-w-0 max-w-full grid-cols-2 gap-2.5" onClick={(e) => e.stopPropagation()}>
         {/* Row 1: Call Now + Payment — Mango gradient + sizing */}
-        <div className="grid grid-cols-2 gap-2 w-full min-w-0">
+        <div className="contents">
           <Button
             ref={callButtonRef}
             data-call-button
@@ -118,7 +118,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
               e.stopPropagation()
               setCallDialogOpen(true)
             }}
-            className="w-full min-w-0 h-11 text-white font-semibold rounded-full transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation relative overflow-hidden group"
+            className="order-1 w-full min-w-0 h-11 text-white font-semibold rounded-full transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation relative overflow-hidden group"
             style={{
               ...CALL_BUTTON_STYLE,
               WebkitTapHighlightColor: 'transparent',
@@ -146,16 +146,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           </Button>
 
           {onOpenPayments && (
-            <div className="min-w-0 relative">
-              <span
-                className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 text-white text-[8px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap z-20 animate-pulse"
-                style={{
-                  background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
-                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.5), 0 0 12px rgba(239, 68, 68, 0.3)',
-                }}
-              >
-                NEW
-              </span>
+            <div className="order-2 min-w-0 relative">
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -199,16 +190,18 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
         </div>
 
       {/* Menu/Order & Location buttons */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="contents">
         <Button
           onClick={(e) => {
             e.stopPropagation()
             handleWhatsApp()
           }}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-7 min-w-0 h-11 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
           style={{ 
             color: '#0F172A',
-            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            background: '#FFFFFF',
+            borderColor: 'rgba(37, 211, 102, 0.22)',
+            boxShadow: '0 9px 18px rgba(0, 0, 0, 0.16), 0 4px 9px rgba(37, 211, 102, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
@@ -219,11 +212,11 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.boxShadow = '0 9px 18px rgba(0, 0, 0, 0.16), 0 4px 9px rgba(37, 211, 102, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <div className="w-4 h-4 relative">
+          <div className="w-5 h-5 relative">
             <svg viewBox="0 0 24 24" className="w-full h-full fill-current text-green-600">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
@@ -233,7 +226,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
         <Button
           onClick={handleDirections}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-8 min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -242,26 +235,18 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             WebkitTapHighlightColor: 'transparent',
             transform: 'translateY(-1px)'
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
-            e.currentTarget.style.transform = 'translateY(-2px)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
-            e.currentTarget.style.transform = 'translateY(-1px)'
-          }}
         >
-          <MapPin className="w-4 h-4" style={{ color: '#EF4444', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))' }} />
+          <MapPin className="w-5 h-5" style={{ color: '#EF4444', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))' }} strokeWidth={2.5} />
           <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>Location</span>
         </Button>
       </div>
 
       {/* Reviews and Share */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="contents">
         <Link
           href="/reviews"
           onClick={(e) => e.stopPropagation()}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-9 min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation"
           style={{ 
             color: '#0F172A',
             boxShadow: '0 8px 16px rgba(234, 179, 8, 0.25), 0 4px 8px rgba(234, 179, 8, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -270,56 +255,52 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             WebkitTapHighlightColor: 'transparent',
             transform: 'translateY(-1px)'
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 10px 20px rgba(234, 179, 8, 0.3), 0 6px 12px rgba(234, 179, 8, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
-            e.currentTarget.style.transform = 'translateY(-2px)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(234, 179, 8, 0.25), 0 4px 8px rgba(234, 179, 8, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
-            e.currentTarget.style.transform = 'translateY(-1px)'
-          }}
         >
-          <Star className="w-4 h-4" style={{ color: '#EAB308' }} fill="#EAB308" />
+          <Star className="w-4 h-4" style={{ color: '#EAB308' }} fill="#EAB308" strokeWidth={2.4} />
           <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>Reviews</span>
         </Link>
 
         <Button
           onClick={handleShare}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-12 min-w-0 h-11 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
           style={{ 
             color: '#0F172A',
-            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            borderColor: 'rgba(10, 143, 199, 0.22)',
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #F1F7FD 100%)',
+            boxShadow: '0 9px 18px rgba(7, 90, 156, 0.17), 0 4px 9px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
             transform: 'translateY(-1px)'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+            e.currentTarget.style.boxShadow = '0 11px 22px rgba(7, 90, 156, 0.17), 0 6px 12px rgba(43, 162, 76, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1)'
             e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+            e.currentTarget.style.boxShadow = '0 9px 18px rgba(7, 90, 156, 0.17), 0 4px 9px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.96)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <Share2 className="w-4 h-4" style={{ color: '#3B82F6' }} />
-          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>Share</span>
+          <Share2 className="w-4 h-4" style={{ color: '#075A9C' }} strokeWidth={2.4} />
+          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>Share Card</span>
         </Button>
       </div>
 
       {/* Products & Brochures buttons – smooth scroll to home sections */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="contents">
         <Button
           onClick={(e) => {
             e.stopPropagation()
             scrollToSection('products')
           }}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-3 min-w-0 h-11 rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
           style={{
-            color: '#0F172A',
+            color: '#075A9C',
+            background: '#FFFFFF',
+            borderColor: 'rgba(10, 143, 199, 0.32)',
             boxShadow:
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+              '0 9px 18px rgba(7, 90, 156, 0.18), 0 4px 9px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
@@ -327,17 +308,17 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+              '0 12px 24px rgba(7, 90, 156, 0.22), 0 6px 12px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1)'
             e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+              '0 9px 18px rgba(7, 90, 156, 0.18), 0 4px 9px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.94)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <Package className="w-4 h-4" style={{ color: '#1D4ED8' }} />
-          <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
+          <PackageCheck className="w-5 h-5 shrink-0" style={{ color: '#075A9C' }} strokeWidth={2.4} />
+          <span className="text-sm font-bold" style={{ color: '#075A9C', fontSize: '14px' }}>
             Products
           </span>
         </Button>
@@ -347,11 +328,13 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             e.stopPropagation()
             scrollToSection('brochures')
           }}
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-4 min-w-0 h-11 rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
           style={{
             color: '#0F172A',
+            background: '#F3F8FE',
+            borderColor: 'rgba(29, 78, 216, 0.24)',
             boxShadow:
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+              '0 9px 18px rgba(29, 78, 216, 0.14), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
             borderRadius: '16px',
             fontSize: '14px',
             WebkitTapHighlightColor: 'transparent',
@@ -364,22 +347,58 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+              '0 9px 18px rgba(29, 78, 216, 0.14), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <FileText className="w-4 h-4" style={{ color: '#CA8A04' }} />
+          <BookOpen className="w-5 h-5 shrink-0" style={{ color: '#1D4ED8' }} strokeWidth={2.4} />
           <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
             Brochures
           </span>
         </Button>
       </div>
 
+      {/* Services & Support — New Vision subpage actions */}
+      <div className="contents">
+        <Link
+          href="/services"
+          onClick={(e) => e.stopPropagation()}
+          className="order-5 min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
+          style={{
+            color: '#0F172A',
+            borderColor: 'rgba(10, 143, 199, 0.3)',
+            boxShadow: '0 9px 18px rgba(7, 90, 156, 0.17), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
+            borderRadius: '16px',
+            transform: 'translateY(-1px)',
+          }}
+        >
+          <FileText className="w-5 h-5 shrink-0" style={{ color: '#075A9C' }} strokeWidth={2.4} />
+          <span className="truncate text-sm font-bold">Services</span>
+        </Link>
+
+        <Link
+          href="/support"
+          onClick={(e) => e.stopPropagation()}
+          className="order-6 min-w-0 h-11 rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
+          style={{
+            color: '#0F766E',
+            background: '#FFFFFF',
+            borderColor: 'rgba(15, 118, 110, 0.28)',
+            boxShadow: '0 9px 18px rgba(15, 118, 110, 0.15), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
+            borderRadius: '16px',
+            transform: 'translateY(-1px)',
+          }}
+        >
+          <Headphones className="w-5 h-5 shrink-0" style={{ color: '#0F766E' }} strokeWidth={2.4} />
+          <span className="truncate text-sm font-bold text-slate-900">Support</span>
+        </Link>
+      </div>
+
       {/* Save Contact & View Gallery — Mango shimmer + 2-circle gallery preview */}
-      <div className="grid grid-cols-2 gap-2 w-full min-w-0">
+      <div className="contents">
         <Button
           onClick={handleSaveContact}
-          className="w-full min-w-0 h-11 bg-white/90 hover:bg-white backdrop-blur-md text-slate-700 rounded-2xl border-2 border-blue-500/70 hover:border-blue-600/90 relative overflow-hidden transition-all touch-manipulation"
+          className="order-11 w-full min-w-0 h-11 bg-white/90 hover:bg-white backdrop-blur-md text-slate-700 rounded-2xl border-2 border-blue-500/70 hover:border-blue-600/90 relative overflow-hidden transition-all touch-manipulation"
           style={{
             boxShadow:
               '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
@@ -401,7 +420,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-[shimmer_2s_infinite] pointer-events-none" />
           <div className="relative z-10 flex items-center justify-center gap-2">
-            <Download className="w-4 h-4" style={{ color: '#1D4ED8' }} />
+            <Download className="w-4 h-4" style={{ color: '#1D4ED8' }} strokeWidth={2.4} />
             <span className="text-sm font-bold truncate" style={{ fontSize: '14px' }}>
               {t('saveContact')}
             </span>
@@ -410,11 +429,12 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
 
         <Link
           href="/gallery"
-          className="min-w-0 h-11 bg-white/90 backdrop-blur-md hover:bg-white rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border border-slate-200/90"
+          className="order-10 min-w-0 h-11 bg-white backdrop-blur-md hover:bg-white rounded-2xl border transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation"
           style={{
             color: '#0F172A',
+            borderColor: 'rgba(10, 143, 199, 0.18)',
             boxShadow:
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+              '0 9px 18px rgba(0, 0, 0, 0.16), 0 4px 9px rgba(7, 90, 156, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
             borderRadius: '16px',
             WebkitTapHighlightColor: 'transparent',
             fontSize: '14px',
@@ -427,7 +447,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow =
-              '0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+              '0 9px 18px rgba(0, 0, 0, 0.16), 0 4px 9px rgba(7, 90, 156, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >

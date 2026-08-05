@@ -30,7 +30,7 @@ export default function Gallery() {
   }
 
   return (
-    <section id="gallery" className="w-full max-w-md mx-auto px-4 pt-8 pb-6">
+    <section id="gallery" className="w-full max-w-md mx-auto pt-8 pb-6">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -88,10 +88,22 @@ export default function Gallery() {
               sessionStorage.setItem('fromGallery', 'true')
             }
           }}
-          className="btn-primary block w-full font-bold py-4 px-6 rounded-2xl shadow-[0_18px_34px_rgba(16,185,129,0.28)] hover:shadow-[0_22px_40px_rgba(16,185,129,0.34)] transition-all flex items-center justify-center gap-2"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#075A9C] px-5 text-sm font-black text-white shadow-[0_12px_24px_rgba(7,90,156,0.3)] transition-all hover:bg-[#086fab] active:scale-[0.98]"
         >
+          <span className="flex -space-x-2" aria-hidden>
+            {visibleItems.slice(0, 2).map(({ src, alt }) => (
+              <Image
+                key={src}
+                src={src}
+                alt={alt}
+                width={28}
+                height={28}
+                className="h-7 w-7 rounded-full border-2 border-white object-cover shadow"
+              />
+            ))}
+          </span>
           View Gallery
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </motion.div>
     </section>

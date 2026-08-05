@@ -23,7 +23,7 @@
   flex: 1;
   height: 1px;
   min-width: 2rem;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.7), rgba(16, 185, 129, 0));
+  background: linear-gradient(90deg, rgba(10, 143, 199, 0.7), rgba(10, 143, 199, 0));
 }
 
 /* Inside dark emerald shells, switch the accent line to a brighter emerald for visibility */
@@ -91,21 +91,21 @@
 
 /* Why Choose Us — Dogra-style blue shell + teal glow (Jay Ess) */
 .section-shell-blue {
-  border: 1px solid rgba(59, 130, 246, 0.22);
-  background: linear-gradient(145deg, rgba(30, 58, 95, 0.98) 0%, rgba(30, 64, 110, 0.99) 42%, rgba(15, 52, 72, 0.99) 100%);
-  box-shadow: 0 24px 70px rgba(8, 16, 28, 0.38), 0 8px 24px rgba(14, 116, 144, 0.22);
+  border: 1px solid rgba(10, 143, 199, 0.18);
+  background: #075A9C;
+  box-shadow: 0 24px 70px rgba(7, 90, 156, 0.22), 0 8px 24px rgba(19, 170, 167, 0.14);
 }
 
 .section-shell-blue .section-title-accent::after {
-  background: linear-gradient(90deg, rgba(147, 197, 253, 0.88), rgba(94, 234, 212, 0.35), rgba(147, 197, 253, 0));
+  background: linear-gradient(90deg, rgba(147, 197, 253, 0.85), rgba(147, 197, 253, 0));
 }
 
 .section-shell.section-shell-blue::after {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+  background: radial-gradient(circle, rgba(10, 143, 199, 0.2), transparent 70%);
 }
 
 .section-shell.section-shell-blue::before {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 40%, rgba(59, 130, 246, 0.28) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04) 40%, rgba(10, 143, 199, 0.22) 100%);
 }
 
 .section-shell-inner {
@@ -134,7 +134,7 @@
   
   body {
     @apply text-slate-100;
-    background-color: #1a1a1a;
+    background-color: #191A19;
     position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -354,4 +354,3 @@ body:has(.yarl__root) {
     transform: translateX(100%);
   }
 }
-

@@ -10,7 +10,7 @@ export default function About() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className="w-full max-w-md mx-auto px-4 py-6"
+      className="w-full max-w-md mx-auto py-4"
     >
       {/* Premium outer shell — Dogra-style blue palette */}
       <div className="section-shell section-shell-blue">
@@ -20,11 +20,11 @@ export default function About() {
 
           <div className="relative">
             <div className="section-title-accent mb-4">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight text-left">
+              <h2 className="text-[28px] sm:text-[32px] font-black leading-tight text-white tracking-[-0.02em] text-left">
                 {siteConfig.about.title}
               </h2>
             </div>
-            <p className="text-white/90 leading-[1.75] text-[15px]">
+            <p className="text-white/92 leading-[1.75] text-[15.5px] font-medium">
               {siteConfig.about.description}
             </p>
             <div className="mt-6 h-px w-full bg-gradient-to-r from-white/40 via-[#38BDF8]/65 to-transparent" />

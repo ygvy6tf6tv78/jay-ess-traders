@@ -62,7 +62,8 @@ export default function Hero() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-md mx-auto px-4 pt-4 pb-6"
+      className="w-full max-w-md mx-auto pt-4 pb-6 min-w-0"
+      style={{ width: '100%', maxWidth: 'min(100%, 28rem)' }}
     >
       <Card3D
         currentFace={currentFace}
@@ -96,7 +97,7 @@ export default function Hero() {
               }}
             />
 
-            {/* Tap-to-flip pill — premium emerald-tinted */}
+            {/* Tap-to-flip pill — New Vision blue detailing */}
             {currentFace === 'front' && (
               <motion.button
                 type="button"
@@ -114,9 +115,9 @@ export default function Hero() {
                   WebkitTapHighlightColor: 'transparent',
                   color: '#1f2937',
                   background: 'rgba(255,255,255,0.95)',
-                  border: '1px solid rgba(217, 119, 6, 0.30)',
+                  border: '1px solid rgba(10, 143, 199, 0.34)',
                   boxShadow:
-                    '0 8px 18px rgba(202, 138, 4, 0.14), 0 2px 6px rgba(15, 23, 42, 0.08)',
+                    '0 8px 18px rgba(7, 90, 156, 0.16), 0 2px 6px rgba(15, 23, 42, 0.08)',
                 }}
               >
                 <Hand className="w-3.5 h-3.5" style={{ color: '#475569' }} />
@@ -139,10 +140,10 @@ export default function Hero() {
 
             {/* Content */}
             <div
-              className="relative z-[5] px-6 pb-7 pt-3"
+              className="relative z-[5] px-5 pb-5 pt-3 max-w-full"
               style={{
                 background:
-                  'linear-gradient(180deg, rgba(253,255,255,0.72) 0%, rgba(255,255,255,0.9) 36%, rgba(255,255,255,0.96) 100%)',
+                  'linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.95) 36%, rgba(255,255,255,0.98) 100%)',
               }}
             >
               {/* Soft white halo behind brand info — Mango blur lift */}
@@ -166,9 +167,9 @@ export default function Hero() {
                 <div
                   className="w-32 h-32 rounded-full flex items-center justify-center overflow-hidden bg-white p-1.5"
                   style={{
-                    border: '2px solid rgba(251, 236, 137, 0.85)',
+                    border: '2px solid rgba(10, 143, 199, 0.42)',
                     boxShadow:
-                      '0 14px 30px rgba(202, 138, 4, 0.18), 0 4px 10px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.6) inset',
+                      '0 14px 30px rgba(7, 90, 156, 0.2), 0 4px 10px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.6) inset',
                   }}
                 >
                   <Image
@@ -236,22 +237,22 @@ export default function Hero() {
 
               {/* Brand info — Mango sizing & rhythm */}
               <motion.div
-                className="pt-20 mb-4"
+                className="pt-[76px] mb-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <h1 className="text-2xl font-black text-slate-900 mb-1 leading-tight tracking-tight">
+                <h1 className="text-[26px] font-black text-slate-950 mb-1 leading-[1.08] tracking-[-0.025em]">
                   {siteConfig.name}
                 </h1>
                 <p
-                  className="font-semibold text-[15px] mb-1 leading-snug"
-                  style={{ color: '#1D4ED8' }}
+                  className="font-semibold text-[15.5px] mb-1 leading-snug"
+                  style={{ color: '#075A9C' }}
                 >
                   {siteConfig.tagline}
                 </p>
                 {(siteConfig as { serviceTagline?: string }).serviceTagline && (
-                  <p className="text-[12px] font-medium tracking-wide leading-snug text-slate-500">
+                  <p className="text-[12.5px] font-semibold tracking-[0.02em] leading-snug text-slate-600">
                     {(siteConfig as { serviceTagline: string }).serviceTagline}
                   </p>
                 )}
@@ -259,7 +260,7 @@ export default function Hero() {
 
               {/* Badges — Mango spacing */}
               <motion.div
-                className="mb-5"
+                className="mb-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -286,11 +287,11 @@ export default function Hero() {
           <div
             className="rounded-[24px] shadow-2xl overflow-hidden cursor-pointer relative h-full flex flex-col touch-manipulation"
             style={{
-              background: 'linear-gradient(135deg, #047857 0%, #10B981 100%)',
+              background: 'linear-gradient(135deg, #1E3A5F 0%, #2C5282 100%)',
               minHeight: 'min(580px, 85dvh)',
               boxSizing: 'border-box',
               WebkitTapHighlightColor: 'transparent',
-              border: '2px solid rgba(16, 185, 129, 0.5)',
+              border: '2px solid rgba(59, 130, 246, 0.5)',
             }}
             onClick={(e) => {
               const target = e.target as HTMLElement
@@ -350,13 +351,13 @@ export default function Hero() {
                   className="flex items-start gap-3 w-full mb-3 rounded-[22px] p-3.5 sm:p-4 border shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
                   style={{
                     background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.97) 0%, rgba(236,253,245,0.92) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.35)',
+                      'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.94) 100%)',
+                    borderColor: 'rgba(59, 130, 246, 0.35)',
                   }}
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(4,120,87,0.28)]"
-                    style={{ background: 'linear-gradient(135deg, #047857 0%, #10B981 100%)' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(7,90,156,0.28)]"
+                    style={{ background: 'linear-gradient(135deg, #075A9C 0%, #0A8FC7 100%)' }}
                   >
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
@@ -372,13 +373,13 @@ export default function Hero() {
                   className="flex items-start gap-3 w-full mb-3 rounded-[22px] p-3.5 sm:p-4 border shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
                   style={{
                     background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.97) 0%, rgba(236,253,245,0.92) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.35)',
+                      'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.94) 100%)',
+                    borderColor: 'rgba(59, 130, 246, 0.35)',
                   }}
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(4,120,87,0.28)]"
-                    style={{ background: 'linear-gradient(135deg, #047857 0%, #10B981 100%)' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(7,90,156,0.28)]"
+                    style={{ background: 'linear-gradient(135deg, #075A9C 0%, #0A8FC7 100%)' }}
                   >
                     <Store className="w-5 h-5 text-white" />
                   </div>
@@ -394,13 +395,13 @@ export default function Hero() {
                   className="flex items-start gap-3 w-full mb-3 rounded-[22px] p-3.5 sm:p-4 border shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
                   style={{
                     background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.97) 0%, rgba(236,253,245,0.92) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.35)',
+                      'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(239,246,255,0.94) 100%)',
+                    borderColor: 'rgba(59, 130, 246, 0.35)',
                   }}
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(4,120,87,0.28)]"
-                    style={{ background: 'linear-gradient(135deg, #047857 0%, #10B981 100%)' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_18px_rgba(7,90,156,0.28)]"
+                    style={{ background: 'linear-gradient(135deg, #075A9C 0%, #0A8FC7 100%)' }}
                   >
                     <Clock className="w-5 h-5 text-white" />
                   </div>
@@ -416,7 +417,7 @@ export default function Hero() {
                   className="w-full h-28 sm:h-32 rounded-[22px] overflow-hidden mb-4 pointer-events-none flex-shrink-0 border shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
                   style={{
                     background: 'rgba(255,255,255,0.94)',
-                    borderColor: 'rgba(16, 185, 129, 0.32)',
+                    borderColor: 'rgba(59, 130, 246, 0.32)',
                   }}
                 >
                   <iframe

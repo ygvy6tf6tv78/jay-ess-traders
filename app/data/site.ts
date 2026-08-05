@@ -10,7 +10,6 @@ export const siteConfig = {
   keywordBadges: [
     "Authorised Dealer",
     "Curated Premium Range",
-    "Quick Delivery",
   ] as string[],
   url: "https://jayess.onelink.cards",
   
@@ -55,8 +54,8 @@ export const siteConfig = {
   ],
   
   about: {
-    title: "Premium Building Materials",
-    description: "We supply premium tiles, bath fittings, electrical switches, and paints from trusted brands. Visit our store for curated selections, quick delivery, and reliable after sales support.",
+    title: "Welcome to Jay Ess Traders",
+    description: "We supply premium tiles, bath fittings, electrical switches and paints from trusted brands. Visit our Akhnoor showroom for curated selections, finish comparisons and practical product guidance.",
   },
   
   catalog: [
@@ -153,4 +152,3 @@ export const siteConfig = {
 }
 
 export type SiteConfig = typeof siteConfig
-

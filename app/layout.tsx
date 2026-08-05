@@ -87,15 +87,15 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={inter.variable} style={{ backgroundColor: '#1a1a1a' }}>
+    <html lang="en" className={inter.variable} style={{ backgroundColor: '#191A19' }}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <style dangerouslySetInnerHTML={{ __html: `html, body { background-color: #1a1a1a !important; }` }} />
+        <style dangerouslySetInnerHTML={{ __html: `html, body { background-color: #191A19 !important; }` }} />
       </head>
-      <body className={`${inter.className} antialiased min-h-screen`} style={{ backgroundColor: '#1a1a1a' }}>
+      <body className={`${inter.className} antialiased min-h-screen`} style={{ backgroundColor: '#191A19' }}>
         <ThemeProvider>
           <LanguageProvider>
             {children}
@@ -105,4 +105,3 @@ export default function RootLayout({
     </html>
   )
 }
-

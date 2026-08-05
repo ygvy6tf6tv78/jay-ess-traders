@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Award, BadgeCheck, Truck, Headphones } from 'lucide-react'
+import { Award, BadgeCheck, Palette, Headphones } from 'lucide-react'
+import Image from 'next/image'
 
 const whyChooseUs = [
   {
@@ -10,6 +11,7 @@ const whyChooseUs = [
     title: 'Authorised Brand Dealer',
     description:
       'Exclusive dealer of Simpolo Tiles & Bath, Jaquar, Legrand and Berger Paints.',
+    image: '/gallery/81947586-5d98-4cd1-83f8-621a036ede24.jpg',
   },
   {
     id: 'why-2',
@@ -17,13 +19,15 @@ const whyChooseUs = [
     title: 'Curated Premium Range',
     description:
       'Hand-picked tiles, bathware, switches and paints for every budget and style.',
+    image: '/gallery/67bdec89-1436-492e-b9b9-a4f7f4e6f01b.jpg',
   },
   {
     id: 'why-3',
-    icon: Truck,
-    title: 'Quick & Safe Delivery',
+    icon: Palette,
+    title: 'Expert Product Guidance',
     description:
-      'Reliable delivery across Akhnoor and surrounding regions, packed safely.',
+      'Helpful in-store guidance for tiles, fittings, switches, finishes and colour selection.',
+    image: '/gallery/9c2f479d-8027-4f20-9102-4a360cb91c5c.jpg',
   },
   {
     id: 'why-4',
@@ -31,6 +35,7 @@ const whyChooseUs = [
     title: 'Expert After-Sales Support',
     description:
       'Friendly team for shade selection, fitting guidance and post-purchase help.',
+    image: '/gallery/7e768fdd-6abc-4bf7-9919-d8b6b432afba.jpg',
   },
 ]
 
@@ -42,7 +47,7 @@ export default function WhyChooseUs() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="w-full max-w-md mx-auto px-4 py-6"
+      className="w-full max-w-md mx-auto py-6"
     >
       <div className="mb-6">
         <div className="section-title-accent mb-2">
@@ -65,46 +70,48 @@ export default function WhyChooseUs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: index * 0.05, duration: 0.3, ease: 'easeOut' }}
-              className="group relative rounded-[25px] p-5 overflow-hidden"
+              className="group relative min-h-[132px] rounded-[26px] p-5 overflow-hidden"
               style={{
-                background:
-                  'linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 35%, #ffffff 72%, #F0F9FF 100%)',
-                border: '1px solid rgba(59, 130, 246, 0.4)',
+                background: '#FFFFFF',
+                border: '1px solid rgba(10, 143, 199, 0.3)',
                 boxShadow:
-                  '0 10px 28px rgba(15, 23, 42, 0.08), 0 2px 10px rgba(59, 130, 246, 0.14)',
+                  '0 16px 34px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(7, 90, 156, 0.13), inset 0 1px 0 rgba(255,255,255,0.96)',
               }}
             >
-              <div className="absolute inset-x-0 top-0 h-20 opacity-65 pointer-events-none bg-gradient-to-b from-white/85 to-transparent" />
-              <div className="absolute right-4 top-4 text-[10px] font-bold tracking-[0.22em] text-slate-400">
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-[52%] overflow-hidden" aria-hidden>
+                <Image src={service.image} alt="" fill className="scale-105 object-cover opacity-[0.48] saturate-[0.9]" sizes="230px" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/65 to-white/10" />
+              </div>
+              <div className="absolute inset-x-0 top-0 h-16 opacity-70 pointer-events-none bg-gradient-to-b from-white/90 to-transparent" />
+              <div className="absolute right-4 top-4 rounded-full border border-sky-200/80 bg-[#EEF7FF]/90 px-2 py-1 text-[9px] font-black tracking-[0.18em] text-[#075A9C] shadow-sm backdrop-blur-sm">
                 {String(index + 1).padStart(2, '0')}
               </div>
 
               <div className="relative z-10 flex items-start gap-4 transition-all duration-300 group-hover:-translate-y-0.5">
                 <div
-                  className="relative z-10 w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 border border-blue-200/70"
+                  className="relative z-10 w-14 h-14 rounded-[18px] flex items-center justify-center flex-shrink-0 border border-sky-200/80"
                   style={{
-                    background:
-                      'linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #BFDBFE 100%)',
+                    background: 'linear-gradient(135deg, #075A9C 0%, #0A8FC7 100%)',
                     boxShadow:
-                      '0 8px 18px rgba(59, 130, 246, 0.18), inset 0 1px 0 rgba(255,255,255,0.92)',
+                      '0 10px 22px rgba(7, 90, 156, 0.28), inset 0 1px 0 rgba(255,255,255,0.24)',
                   }}
                 >
                   <IconComponent
                     className="w-7 h-7 relative z-10"
-                    style={{ color: '#1D4ED8' }}
+                    style={{ color: '#FFFFFF' }}
                     strokeWidth={2}
                   />
                 </div>
 
                 <div className="flex-1 relative z-10 pr-7">
                   <h3
-                    className="font-bold text-base mb-1.5 leading-tight"
+                    className="font-black text-[17px] mb-1.5 leading-tight tracking-[-0.01em]"
                     style={{ color: '#1e293b' }}
                   >
                     {service.title}
                   </h3>
                   <p
-                    className="text-sm leading-relaxed"
+                    className="text-[13.5px] font-medium leading-relaxed"
                     style={{ color: '#475569' }}
                   >
                     {service.description}

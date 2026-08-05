@@ -38,7 +38,7 @@ export default function Brochures() {
   return (
     <section
       id="brochures"
-      className="w-full max-w-md mx-auto px-4 pt-8 pb-6 scroll-mt-24"
+      className="w-full max-w-md mx-auto pt-8 pb-6 scroll-mt-24"
     >
       <div className="mb-6">
         <div className="section-title-accent mb-2">
@@ -63,11 +63,10 @@ export default function Brochures() {
             transition={{ delay: index * 0.04, duration: 0.3, ease: 'easeOut' }}
             className="group relative rounded-[22px] overflow-hidden flex flex-col text-left transition-all hover:-translate-y-0.5 active:scale-[0.98]"
             style={{
-              background:
-                'linear-gradient(160deg, #ffffff 0%, #F0F9FF 55%, #DBEAFE 140%)',
-              border: '1px solid rgba(59, 130, 246, 0.4)',
+              background: '#FFFFFF',
+              border: '1px solid rgba(10, 143, 199, 0.24)',
               boxShadow:
-                '0 12px 24px rgba(15, 23, 42, 0.08), 0 3px 8px rgba(59, 130, 246, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.92)',
+                '0 12px 24px rgba(0, 0, 0, 0.14), 0 3px 8px rgba(7, 90, 156, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
             }}
           >
             {/* Compact PDF preview cover — shorter than square */}
@@ -100,10 +99,10 @@ export default function Brochures() {
                 className="absolute top-2 left-2 inline-flex items-center gap-1 text-[9.5px] font-bold tracking-wide px-2 py-0.5 rounded-full"
                 style={{
                   background:
-                    'linear-gradient(135deg, rgba(219, 234, 254, 0.95) 0%, rgba(239, 246, 255, 0.95) 100%)',
-                  color: '#1D4ED8',
-                  border: '1px solid rgba(59, 130, 246, 0.42)',
-                  boxShadow: '0 2px 6px rgba(59, 130, 246, 0.18)',
+                    '#EEF7FF',
+                  color: '#075A9C',
+                  border: '1px solid rgba(10, 143, 199, 0.35)',
+                  boxShadow: '0 2px 6px rgba(7, 90, 156, 0.15)',
                 }}
               >
                 PDF
@@ -116,39 +115,42 @@ export default function Brochures() {
                 className="absolute top-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded-full transition-all hover:bg-blue-50"
                 style={{
                   background:
-                    'linear-gradient(145deg, rgba(255,255,255,0.96) 0%, #BFDBFE 100%)',
-                  border: '1px solid rgba(59, 130, 246, 0.42)',
-                  boxShadow: '0 2px 6px rgba(59, 130, 246, 0.22)',
+                    '#FFFFFF',
+                  border: '1px solid rgba(10, 143, 199, 0.35)',
+                  boxShadow: '0 2px 6px rgba(7, 90, 156, 0.16)',
                 }}
                 aria-label={`Download ${brochure.title}`}
               >
-                <Download className="w-3.5 h-3.5" style={{ color: '#1D4ED8' }} strokeWidth={2.4} />
+                <Download className="w-3.5 h-3.5" style={{ color: '#075A9C' }} strokeWidth={2.4} />
               </span>
             </div>
 
-            <div className="px-2.5 py-2">
+            <div className="w-full px-2.5 py-2.5 bg-white">
               <h3 className="text-slate-900 font-bold text-[12px] leading-tight line-clamp-1">
                 {brochure.title}
               </h3>
+              <span className="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#075A9C]">
+                Open PDF <FileText className="h-3 w-3" />
+              </span>
             </div>
           </motion.button>
         ))}
       </div>
 
       {siteConfig.brochures.length > 4 && (
-        <div className="mt-4 flex justify-center">
+        <div className="mt-5 flex justify-center">
           <button
             type="button"
             onClick={() => setShowAll((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-amber-200 hover:text-amber-100 transition-colors"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#075A9C] px-5 text-sm font-black text-white shadow-[0_12px_24px_rgba(7,90,156,0.3)] transition-all hover:bg-[#086fab] active:scale-[0.98]"
           >
             {showAll ? (
               <>
-                Show Less <ChevronUp className="w-4 h-4" />
+                Show Fewer Brochures <ChevronUp className="w-4 h-4" />
               </>
             ) : (
               <>
-                View All ({siteConfig.brochures.length}){' '}
+                View All Brochures ({siteConfig.brochures.length}){' '}
                 <ChevronDown className="w-4 h-4" />
               </>
             )}

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ChevronDown, ChevronUp, LayoutGrid, Droplets, Zap, Brush } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { siteConfig } from '../data/site'
+import { GALLERY_ITEMS } from '../data/galleryImages'
 import { getWhatsAppLink } from '../lib/phone'
 
 /** Pick a category icon based on the product title so visuals match the actual category. */
@@ -33,7 +34,7 @@ export default function Catalog() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="w-full max-w-md mx-auto px-4 py-6 scroll-mt-24"
+      className="w-full max-w-md mx-auto py-6 scroll-mt-24"
     >
       <div className="mb-6">
         <div className="section-title-accent mb-2">
@@ -46,7 +47,7 @@ export default function Catalog() {
         </p>
       </div>
 
-      {/* Clean white tiles — brand logo + category icon, no irrelevant photo backgrounds */}
+      {/* Photo-led product cards with clear brand identity. */}
       <div className="grid grid-cols-2 gap-3.5 mb-2">
         {displayItems.map((item, index) => {
           const Icon = getCategoryIcon(item.title)
@@ -57,49 +58,57 @@ export default function Catalog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ delay: index * 0.05, duration: 0.35, ease: 'easeOut' }}
-              className="relative rounded-[24px] overflow-hidden cursor-default group transition-all duration-300 flex flex-col items-center text-center px-3.5 pt-4 pb-4"
+              className="relative rounded-[24px] overflow-hidden cursor-default group transition-all duration-300 flex flex-col p-2"
               style={{
-                background:
-                  'linear-gradient(160deg, #ffffff 0%, #F0F9FF 55%, #DBEAFE 140%)',
-                border: '1px solid rgba(59, 130, 246, 0.4)',
+                background: '#FFFFFF',
+                border: '1px solid rgba(10, 143, 199, 0.26)',
                 boxShadow:
-                  '0 14px 28px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(59, 130, 246, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.92)',
+                  '0 16px 32px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(7, 90, 156, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
               }}
             >
-              <div
-                className="absolute top-2.5 right-2.5 w-7 h-7 rounded-xl flex items-center justify-center"
-                style={{
-                  background:
-                    'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, #BFDBFE 100%)',
-                  border: '1px solid rgba(59, 130, 246, 0.42)',
-                  boxShadow: '0 2px 6px rgba(59, 130, 246, 0.22)',
-                }}
-              >
-                <Icon className="w-3.5 h-3.5" style={{ color: '#1D4ED8' }} strokeWidth={2.2} />
-              </div>
+              <div className="relative h-[102px] w-full">
+                <div className="absolute inset-0 overflow-hidden rounded-[19px] bg-[#EAF5FE]">
+                  <Image
+                    src={GALLERY_ITEMS[index % GALLERY_ITEMS.length].src}
+                    alt={`${item.title} showroom selection`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 448px) 50vw, 210px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-black/10" />
+                </div>
 
-              <div className="relative w-20 h-20 sm:w-[88px] sm:h-[88px] flex items-center justify-center mb-2.5 mt-1">
-                {item.logo ? (
+                <div
+                  className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-xl border border-white/50 bg-white/90 shadow-md backdrop-blur-sm"
+                >
+                  <Icon className="h-4 w-4 text-[#075A9C]" strokeWidth={2.4} />
+                </div>
+
+                <div className="absolute -bottom-0 left-2.5 flex h-14 w-14 translate-y-5 items-center justify-center overflow-hidden rounded-2xl border border-sky-100 bg-white p-1.5 shadow-[0_8px_18px_rgba(15,23,42,0.16)]">
+                  {item.logo ? (
                   <Image
                     src={item.logo}
                     alt={item.title}
                     fill
-                    className="object-contain p-1"
-                    sizes="96px"
+                    className="object-contain p-1.5"
+                    sizes="56px"
                   />
                 ) : (
-                  <span className="text-slate-700 font-bold text-3xl">
+                  <span className="text-2xl font-black text-slate-700">
                     {item.title[0]}
                   </span>
                 )}
+                </div>
               </div>
 
-              <h3 className="font-bold text-[14px] sm:text-[15px] leading-tight text-slate-900">
-                {item.title}
-              </h3>
-              <p className="text-[12px] sm:text-[12.5px] text-slate-600 mt-1.5 leading-snug">
-                {item.description}
-              </p>
+              <div className="flex flex-1 flex-col px-2 pb-2 pt-7 text-left">
+                <h3 className="text-[14px] font-black leading-tight text-slate-950 sm:text-[15px]">
+                  {item.title}
+                </h3>
+                <p className="mt-1.5 text-[11.5px] font-medium leading-[1.45] text-slate-600 sm:text-[12px]">
+                  {item.description}
+                </p>
+              </div>
             </motion.div>
           )
         })}
@@ -110,7 +119,7 @@ export default function Catalog() {
           <button
             type="button"
             onClick={() => setShowAll((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-amber-200 hover:text-amber-100 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-sky-300 hover:text-white transition-colors"
           >
             {showAll ? (
               <>
@@ -140,13 +149,12 @@ export default function Catalog() {
           )}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full font-bold py-3.5 px-5 rounded-[22px] transition-all flex items-center justify-center gap-2.5 hover:-translate-y-0.5 active:scale-[0.99]"
+          className="flex h-12 w-full items-center justify-center gap-2.5 rounded-2xl px-5 font-bold transition-all hover:-translate-y-0.5 active:scale-[0.99]"
           style={{
-            background:
-              'linear-gradient(160deg, #ffffff 0%, #F0F9FF 55%, #DBEAFE 140%)',
-            border: '1px solid rgba(59, 130, 246, 0.4)',
+            background: '#FFFFFF',
+            border: '1px solid rgba(10, 143, 199, 0.24)',
             boxShadow:
-              '0 12px 24px rgba(15, 23, 42, 0.08), 0 3px 8px rgba(59, 130, 246, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.92)',
+              '0 12px 24px rgba(0, 0, 0, 0.14), 0 3px 8px rgba(7, 90, 156, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
             color: '#0F172A',
           }}
         >

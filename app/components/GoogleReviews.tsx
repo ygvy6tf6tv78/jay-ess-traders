@@ -27,8 +27,8 @@ interface ReviewsData {
 }
 
 const cardStyle: React.CSSProperties = {
-  border: '1px solid rgba(251, 236, 137, 0.22)',
-  boxShadow: '0 14px 28px rgba(15, 23, 42, 0.08)',
+  border: '1px solid #F2D878',
+  boxShadow: '0 12px 26px rgba(0, 0, 0, 0.16)',
 }
 
 function getWriteReviewUrl(): string {
@@ -90,7 +90,7 @@ export default function GoogleReviews() {
   // Skeleton
   if (loading) {
     return (
-      <section id="reviews" className="w-full max-w-md mx-auto px-4 pt-8 pb-6">
+      <section id="reviews" className="w-full max-w-md mx-auto pt-8 pb-6">
         <div className="flex items-center justify-between mb-5">
           <div className="section-title-accent">
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight text-left">
@@ -120,7 +120,7 @@ export default function GoogleReviews() {
 
   if (showFallback) {
     return (
-      <section id="reviews" className="w-full max-w-md mx-auto px-4 pt-8 pb-6">
+      <section id="reviews" className="w-full max-w-md mx-auto pt-8 pb-6">
         <div className="flex items-center justify-between mb-5">
           <div className="section-title-accent">
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight text-left">
@@ -140,7 +140,7 @@ export default function GoogleReviews() {
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="rounded-[24px] p-6 text-center bg-white/95"
+          className="rounded-[26px] p-6 text-center bg-white"
           style={cardStyle}
         >
           <div className="flex justify-center gap-1 mb-3">
@@ -153,26 +153,21 @@ export default function GoogleReviews() {
             Leave a quick note on Google — it helps neighbours find quality tiles & bathware.
           </p>
           <div className="space-y-3">
+            <Link
+              href="/reviews"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#087BC1] text-sm font-black text-white shadow-[0_12px_24px_rgba(8,123,193,0.28)]"
+            >
+              View All Reviews
+              <ArrowRight className="w-4 h-4" />
+            </Link>
             <button
               type="button"
               onClick={openWriteReview}
-              className="block w-full font-semibold py-3.5 px-4 rounded-2xl shadow-[0_18px_34px_rgba(29,78,216,0.28)] hover:shadow-[0_22px_40px_rgba(29,78,216,0.34)] transition-all flex items-center justify-center gap-2"
-              style={{
-                background: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)',
-                color: 'white',
-              }}
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-sm font-black text-[#075A9C] shadow-[0_14px_28px_rgba(0,0,0,0.18)] ring-1 ring-slate-200"
             >
-              Write a Review
-              <Star className="w-4 h-4 fill-white text-white" />
+              Write on Google
+              <Star className="w-4 h-4 fill-[#075A9C] text-[#075A9C]" />
             </button>
-            <Link
-              href="/reviews"
-              className="block w-full font-semibold py-3.5 px-4 rounded-2xl shadow-[0_14px_28px_rgba(15,23,42,0.08)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)] transition-all flex items-center justify-center gap-2 bg-white text-slate-900"
-              style={{ border: '1px solid rgba(251, 236, 137, 0.22)' }}
-            >
-              View Reviews Page
-              <ArrowRight className="w-4 h-4 text-slate-900" />
-            </Link>
           </div>
         </motion.div>
       </section>
@@ -183,7 +178,7 @@ export default function GoogleReviews() {
   const displayReviews = data.reviews.slice(0, 2)
 
   return (
-    <section id="reviews" className="w-full max-w-md mx-auto px-4 pt-8 pb-6">
+    <section id="reviews" className="w-full max-w-md mx-auto pt-8 pb-6">
       <div className="flex items-center justify-between mb-5">
         <div className="section-title-accent">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight text-left">
@@ -205,7 +200,7 @@ export default function GoogleReviews() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="mb-5 rounded-[24px] p-5 bg-white/95"
+        className="mb-5 rounded-[26px] p-5 bg-white"
         style={cardStyle}
       >
         <div className="flex items-start justify-between gap-4">
@@ -229,7 +224,7 @@ export default function GoogleReviews() {
               Based on {data.totalReviews.toLocaleString()} reviews on Google
             </p>
           </div>
-          <div className="rounded-full px-3 py-1.5 border border-[#FBEC89]/35 bg-[#fff8df] text-slate-700 text-xs font-semibold whitespace-nowrap">
+          <div className="rounded-full px-3 py-1.5 border border-[#F2D878] bg-[#FFFBEA] text-slate-700 text-xs font-semibold whitespace-nowrap">
             Google
           </div>
         </div>
@@ -243,7 +238,7 @@ export default function GoogleReviews() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ delay: index * 0.05, duration: 0.3, ease: 'easeOut' }}
-            className="rounded-[24px] p-[18px] hover:shadow-lg transition-all relative overflow-hidden bg-white/95"
+            className="rounded-[26px] p-[18px] hover:shadow-lg transition-all relative overflow-hidden bg-white"
             style={cardStyle}
           >
             <div className="flex items-start gap-3 mb-2 relative z-10">
@@ -260,7 +255,7 @@ export default function GoogleReviews() {
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center"
                   style={{
-                    background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+                    background: '#0A8FC7',
                   }}
                 >
                   <span className="text-white font-semibold text-sm">
@@ -303,23 +298,18 @@ export default function GoogleReviews() {
       >
         <Link
           href="/reviews"
-          className="block w-full font-semibold py-3.5 px-4 rounded-2xl shadow-[0_14px_28px_rgba(15,23,42,0.08)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)] transition-all flex items-center justify-center gap-2 bg-white text-slate-900"
-          style={{ border: '1px solid rgba(251, 236, 137, 0.22)' }}
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#087BC1] text-sm font-black text-white shadow-[0_12px_24px_rgba(8,123,193,0.28)]"
         >
           View All Reviews
-          <ArrowRight className="w-4 h-4 text-slate-900" />
+          <ArrowRight className="w-4 h-4" />
         </Link>
         <button
           type="button"
           onClick={openWriteReview}
-          className="block w-full font-semibold py-3.5 px-4 rounded-2xl shadow-[0_18px_34px_rgba(29,78,216,0.28)] hover:shadow-[0_22px_40px_rgba(29,78,216,0.34)] transition-all flex items-center justify-center gap-2"
-          style={{
-            background: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)',
-            color: 'white',
-          }}
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-sm font-black text-[#075A9C] shadow-[0_14px_28px_rgba(0,0,0,0.18)] ring-1 ring-slate-200"
         >
-          Write a Review
-          <Star className="w-4 h-4 fill-white text-white" />
+          Write on Google
+          <Star className="w-4 h-4 fill-[#075A9C] text-[#075A9C]" />
         </button>
       </motion.div>
     </section>

@@ -317,7 +317,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <PackageCheck className="w-5 h-5 shrink-0" style={{ color: '#075A9C' }} strokeWidth={2.4} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#EEF7FF] ring-1 ring-sky-200/90 shadow-sm">
+            <PackageCheck className="h-4 w-4" style={{ color: '#075A9C' }} strokeWidth={2.5} />
+          </span>
           <span className="text-sm font-bold" style={{ color: '#075A9C', fontSize: '14px' }}>
             Products
           </span>
@@ -331,7 +333,7 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
           className="order-4 min-w-0 h-11 rounded-2xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 active:scale-[0.97] touch-manipulation border"
           style={{
             color: '#0F172A',
-            background: '#F3F8FE',
+            background: '#FFFFFF',
             borderColor: 'rgba(29, 78, 216, 0.24)',
             boxShadow:
               '0 9px 18px rgba(29, 78, 216, 0.14), 0 4px 9px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.94)',
@@ -351,7 +353,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             e.currentTarget.style.transform = 'translateY(-1px)'
           }}
         >
-          <BookOpen className="w-5 h-5 shrink-0" style={{ color: '#1D4ED8' }} strokeWidth={2.4} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#EEF2FF] ring-1 ring-indigo-200/90 shadow-sm">
+            <BookOpen className="h-4 w-4" style={{ color: '#1D4ED8' }} strokeWidth={2.5} />
+          </span>
           <span className="text-sm font-bold" style={{ color: '#0F172A', fontSize: '14px' }}>
             Brochures
           </span>
@@ -372,7 +376,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             transform: 'translateY(-1px)',
           }}
         >
-          <FileText className="w-5 h-5 shrink-0" style={{ color: '#075A9C' }} strokeWidth={2.4} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#F0F8FF] ring-1 ring-sky-200/90 shadow-sm">
+            <FileText className="h-4 w-4" style={{ color: '#075A9C' }} strokeWidth={2.5} />
+          </span>
           <span className="truncate text-sm font-bold">Services</span>
         </Link>
 
@@ -389,7 +395,9 @@ export default function ActionsRow({ onOpenPayments }: ActionsRowProps) {
             transform: 'translateY(-1px)',
           }}
         >
-          <Headphones className="w-5 h-5 shrink-0" style={{ color: '#0F766E' }} strokeWidth={2.4} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#ECFDF5] ring-1 ring-teal-200/90 shadow-sm">
+            <Headphones className="h-4 w-4" style={{ color: '#0F766E' }} strokeWidth={2.5} />
+          </span>
           <span className="truncate text-sm font-bold text-slate-900">Support</span>
         </Link>
       </div>

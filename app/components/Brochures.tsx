@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronDown, ChevronUp, FileText, Download } from 'lucide-react'
+import { ChevronDown, ChevronUp, FileText, Download, ArrowUpRight } from 'lucide-react'
 import { Document, Page } from 'react-pdf'
 import { pdfjs } from 'react-pdf'
 import { siteConfig } from '../data/site'
@@ -61,12 +61,12 @@ export default function Brochures() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ delay: index * 0.04, duration: 0.3, ease: 'easeOut' }}
-            className="group relative rounded-[22px] overflow-hidden flex flex-col text-left transition-all hover:-translate-y-0.5 active:scale-[0.98]"
+            className="group relative rounded-[24px] overflow-hidden flex flex-col text-left transition-all hover:-translate-y-0.5 active:scale-[0.98]"
             style={{
               background: '#FFFFFF',
-              border: '1px solid rgba(10, 143, 199, 0.24)',
+              border: '1px solid rgba(10, 143, 199, 0.26)',
               boxShadow:
-                '0 12px 24px rgba(0, 0, 0, 0.14), 0 3px 8px rgba(7, 90, 156, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
+                '0 16px 30px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(7, 90, 156, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.96)',
             }}
           >
             {/* Compact PDF preview cover — shorter than square */}
@@ -125,12 +125,12 @@ export default function Brochures() {
               </span>
             </div>
 
-            <div className="w-full px-2.5 py-2.5 bg-white">
-              <h3 className="text-slate-900 font-bold text-[12px] leading-tight line-clamp-1">
+            <div className="flex min-h-[72px] w-full flex-col justify-between bg-white px-3 py-3">
+              <h3 className="text-slate-950 font-black text-[13px] leading-tight line-clamp-1">
                 {brochure.title}
               </h3>
-              <span className="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-[#075A9C]">
-                Open PDF <FileText className="h-3 w-3" />
+              <span className="mt-2 inline-flex items-center justify-between rounded-xl bg-[#F4F8FC] px-2.5 py-1.5 text-[10px] font-black text-[#075A9C] ring-1 ring-sky-100">
+                View Brochure <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
               </span>
             </div>
           </motion.button>
